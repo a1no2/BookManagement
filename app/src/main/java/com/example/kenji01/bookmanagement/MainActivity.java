@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,25 @@ public class MainActivity extends FragmentActivity {
     private TextView resultText;
 
 
+//    //DBを使う準備
+//    private SQLiteDatabase db;
+//    private DB_helper db_helper;
+//    //データベースの参照位置を保持
+//    private Cursor c_p;
+//    private Cursor c_w;
+//
+//    private ArrayList<String> title_arr_p;
+//    private ArrayList<String> title_arr_w;
+//    private ArrayList<String> id_arr_p;
+//    private ArrayList<String> id_arr_w;
+//    private ArrayAdapter<String> adapter_p;
+//    private ArrayAdapter<String> adapter_w;
+//    ListView list_p;
+//    ListView list_w;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +61,6 @@ public class MainActivity extends FragmentActivity {
         );
 
         resultText = (TextView)findViewById(R.id.tst);
-
-// Activity内部での処理を想定
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-// Activity上のR.id.fragment_containerの領域をCategoryFragmentに置き換える
-//        transaction.replace(R.id.aaaa, new PossessionListActivity());
-//        transaction.commit();
-
-
-
-
-
 
 
     }
@@ -88,6 +97,28 @@ public class MainActivity extends FragmentActivity {
     //未実装のボタンの処理
     public void tst(View v) {
         Toast.makeText(this, "未実装", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setAdapter_p() {
+//        title_arr_p = new ArrayList<>();
+//        id_arr_p = new ArrayList<>();
+//
+//        c_p = db.query(
+//                DB_helper.TABLE_NAME,
+//                new String[]{DB_helper.BOOK_NAME,DB_helper.BOOK_ID},
+//                null,null,null,null,DB_helper.BOOK_NAME + ""
+//        );
+//        while (c_p.moveToNext()){
+//            title_arr_p.add(c_p.getString(c_p.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
+//            id_arr_p.add(c_p.getString(c_p.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
+//
+//        }
+//        adapter_p = new ArrayAdapter<String>(
+//                getApplicationContext(),
+//                android.R.layout.simple_dropdown_item_1line,
+//                title_arr_p
+//        );
+//        list_p.setAdapter(adapter_p);
     }
 
 }

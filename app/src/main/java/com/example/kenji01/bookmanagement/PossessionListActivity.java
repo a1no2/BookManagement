@@ -1,12 +1,12 @@
 package com.example.kenji01.bookmanagement;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,15 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
 
-public class PossessionListActivity extends Fragment {
+public class PossessionListActivity extends Fragment{
     private ArrayList<String> title_arr;
     private ArrayList<String> id_arr;
     private ArrayAdapter<String> adapter;
@@ -50,14 +50,15 @@ public class PossessionListActivity extends Fragment {
         db = db_helper.getWritableDatabase();
         setAdapter();
 
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), position + "番目のアイテムがクリックされました", Toast.LENGTH_LONG).show();
-//                Toast.makeText(getContext(), id_arr.get(position) + ":" + title_arr.get(position), Toast.LENGTH_SHORT).show();
-//                Intent i = new Intent(this, RegistrationActivity.class);
+                Toast.makeText(getContext(), position + "：フラグメント", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), id_arr.get(position) + ":" + title_arr.get(position), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), RegistrationActivity.class);
 //                Intent i = new Intent(MainActivity.class,PossessionListActivity.class);
-//                i.putExtra("ID",id_arr.get(position));
-//                startActivity(i);
+                i.putExtra("ID",id_arr.get(position));
+                startActivity(i);
 
 
             }
@@ -70,57 +71,59 @@ public class PossessionListActivity extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
 
-//                c.moveToPosition(position);
+                c.moveToPosition(position);
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.class);
-//                builder.setTitle("項目の削除");
-//                builder.setMessage("この項目を削除してよろしいですか？");
-////                builder.setCancelable(false);
-//                remove_id = position;
-//                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-//                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        db.delete(
-//                                db_helper.TABLE_NAME,
-//                                db_helper.BOOK_ID + " = ?",
-//                                new String[] {id_arr.get(remove_id)}
-////                              m          new String[] {c.getString(c.getColumnIndex(db_helper.BOOK_ID))}
-//                        );
-//                        setAdapter();
-//
-//                        Toast.makeText(getContext(), "ok", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-//                // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-//                builder.setNegativeButton("NO",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                builder.setCancelable(true);
-//                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("項目の削除");
+                builder.setMessage("この項目を削除してよろしいですか？");
+//                builder.setCancelable(false);
+                remove_id = position;
+                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.delete(
+                                db_helper.TABLE_NAME,
+                                db_helper.BOOK_ID + " = ?",
+                                new String[] {id_arr.get(remove_id)}
+//                                new String[] {c.getString(c.getColumnIndex(db_helper.BOOK_ID))}
+                        );
+                        setAdapter();
 
+                        Toast.makeText(getContext(), "ok", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                builder.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.setCancelable(true);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 return true;
             }
         });
 
-
         return v;
     }
+
+
+
+
     @Override
     public void onResume() {
         super.onResume();
         setAdapter();
+        Toast.makeText(getContext(), "onResume", Toast.LENGTH_LONG).show();
     }
-
     //リスト表示
     private void setAdapter() {
-        list = (ListView) v.findViewById(R.id.list);
+        list = (ListView) v.findViewById(R.id.list_p);
         title_arr = new ArrayList<>();
         id_arr = new ArrayList<>();
 
@@ -145,4 +148,7 @@ public class PossessionListActivity extends Fragment {
         );
         list.setAdapter(adapter);
     }
+
+
+
 }

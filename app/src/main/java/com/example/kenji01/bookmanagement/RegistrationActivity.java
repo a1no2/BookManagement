@@ -141,32 +141,33 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             //登録ボタン
             case R.id.registration_btn:
-
-                int aa = radioGroup.getCheckedRadioButtonId();
-                Toast.makeText(this, aa+"", Toast.LENGTH_SHORT).show();
+                int radio_ID = radioGroup.getCheckedRadioButtonId();
 
                 if (bookName_editText.getText().toString().equals("")) {
                     Toast.makeText(this, radioGroup.getCheckedRadioButtonId()+"", Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, "書籍名が空白です", Toast.LENGTH_SHORT).show();
                     break;
-                } else if (radioGroup.getCheckedRadioButtonId() == -1){
+                } else if (radio_ID == -1){
                     Toast.makeText(this, "欲しいものリストか所持リストを選択してください", Toast.LENGTH_SHORT).show();
 
-                    //新規登録
+
+                //新規登録
                 } else if (id_.equals("create")){
                     db_helper = new DB_helper(getApplicationContext());
                     db = db_helper.getWritableDatabase();
 
-                    //押されたラジオボタンのIDを取得しオブジェクト取得
-                    int radioButton_id = radioGroup.getCheckedRadioButtonId();
+                    RadioButton radio = (RadioButton)findViewById(radio_ID);
+                    String radio_text = radio.getText().toString();
+
                     //所持していたら1 欲しいものリスト0
-                    if (radioButton_id == 2131492978){
-                        radioButton_id = 0;
-                    } else if (radioButton_id == 2131492979) {
-                        radioButton_id = 1;
+                    if (radio_text.equals("欲しいものリスト")){
+                        radio_ID = 0;
+                    } else if (radio_text.equals("所持リスト")) {
+                        radio_ID = 1;
                     } else {
                         //ありえない値
-                        radioButton_id = 999;
+                        radio_ID = 999;
+                        Toast.makeText(this, "error:radio", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -178,7 +179,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             + "'" + bookName_editText.getText().toString() + "',"
                             + "'" + author_editText.getText().toString() + "',"
                             + "'" + code_editText.getText().toString() + "',"
-                            + "'" + radioButton_id + "',"
+                            + "'" + radio_ID + "',"
                             + "'" + price_editText.getText().toString() + "',"
                             + "'" + purchaseDate_editText.getText().toString() + "'"
                             + " );";
@@ -194,19 +195,25 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                     //更新
                 } else {
+                    RadioButton radio = (RadioButton)findViewById(radio_ID);
+                    String radio_text = radio.getText().toString();
 
-                    int radioButton_id = radioGroup.getCheckedRadioButtonId();
                     //所持していたら1 欲しいものリスト0
-                    if (radioButton_id == 2131492977){
-                        radioButton_id = 0;
-                    } else if (radioButton_id == 2131492978) {
-                        radioButton_id = 1;
+                    if (radio_text.equals("欲しいものリスト")){
+                        radio_ID = 0;
+                    } else if (radio_text.equals("所持リスト")) {
+                        radio_ID = 1;
+                    } else {
+                        //ありえない値
+                        radio_ID = 999;
+                        Toast.makeText(this, "error:radio", Toast.LENGTH_SHORT).show();
                     }
+
                     ContentValues valuse = new ContentValues();
                     valuse.put(db_helper.BOOK_NAME, bookName_editText.getText().toString());
                     valuse.put(db_helper.AUTHOR, author_editText.getText().toString());
                     valuse.put(db_helper.CODE, code_editText.getText().toString());
-                    valuse.put(db_helper.HAVE, radioButton_id);
+                    valuse.put(db_helper.HAVE, radio_ID);
                     valuse.put(db_helper.PRICE, price_editText.getText().toString());
                     valuse.put(db_helper.PURCHASE_DATE, purchaseDate_editText.getText().toString());
 
@@ -219,7 +226,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     );
                     Toast.makeText(this, "登録完了しました！", Toast.LENGTH_SHORT).show();
                     this.finish();
-
                 }
 
                 break;
