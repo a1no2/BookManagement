@@ -65,12 +65,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (id_.equals("create")){
 
         } else {
-//            Curs            String SQL_str =
-//                    "select * " +
-//                    "from " + db_helper.TABLE_NAME +
-//                    " where " + db_helper.BOOK_ID + " = ?;";
-//            Log.d("SQL:", SQL_str);or c = db.rawQuery(SQL_str, new String[]{id_});
-
             Cursor cursor = db.query(
                     DB_helper.TABLE_NAME,
                     new String []{DB_helper.BOOK_NAME, DB_helper.AUTHOR, DB_helper.CODE,
@@ -90,21 +84,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 price_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.PRICE)));
                 purchaseDate_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.PURCHASE_DATE)));
 
-
                 String have = cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.HAVE));
-
-                Toast.makeText(this, have, Toast.LENGTH_LONG).show();
                 if (have.equals("1" )){
                     have_radio.setChecked(true);
                 } else {
                     went_radio.setChecked(true);
                 }
-
             }
         }
-
-
     }
+
 
     //ボタンのクリックイベント
     @Override
@@ -125,6 +114,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 code_editText.setText("");
                                 price_editText.setText("");
                                 purchaseDate_editText.setText("");
+                                Toast.makeText(RegistrationActivity.this, "クリアしました。", Toast.LENGTH_SHORT).show();
                             }
                         });
                 alertDlg.setNegativeButton(
@@ -132,6 +122,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Cancel ボタンクリック処理
+                                Toast.makeText(RegistrationActivity.this, "キャンセルしました。", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -144,7 +135,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 int radio_ID = radioGroup.getCheckedRadioButtonId();
 
                 if (bookName_editText.getText().toString().equals("")) {
-                    Toast.makeText(this, radioGroup.getCheckedRadioButtonId()+"", Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, "書籍名が空白です", Toast.LENGTH_SHORT).show();
                     break;
                 } else if (radio_ID == -1){
@@ -224,12 +214,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             where,
                             null
                     );
-                    Toast.makeText(this, "登録完了しました！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "更新完了しました！", Toast.LENGTH_SHORT).show();
                     this.finish();
                 }
-
                 break;
         }
-
     }
 }

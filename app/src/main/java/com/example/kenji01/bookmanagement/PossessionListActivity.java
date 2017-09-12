@@ -53,14 +53,9 @@ public class PossessionListActivity extends Fragment{
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), position + "：フラグメント", Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), id_arr.get(position) + ":" + title_arr.get(position), Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getActivity(), RegistrationActivity.class);
-//                Intent i = new Intent(MainActivity.class,PossessionListActivity.class);
                 i.putExtra("ID",id_arr.get(position));
                 startActivity(i);
-
-
             }
         });
 
@@ -70,13 +65,10 @@ public class PossessionListActivity extends Fragment{
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
-
                 c.moveToPosition(position);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("項目の削除");
                 builder.setMessage("この項目を削除してよろしいですか？");
-//                builder.setCancelable(false);
                 remove_id = position;
                 // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
                 builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
@@ -86,11 +78,9 @@ public class PossessionListActivity extends Fragment{
                                 db_helper.TABLE_NAME,
                                 db_helper.BOOK_ID + " = ?",
                                 new String[] {id_arr.get(remove_id)}
-//                                new String[] {c.getString(c.getColumnIndex(db_helper.BOOK_ID))}
                         );
                         setAdapter();
-
-                        Toast.makeText(getContext(), "ok", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "削除しました。", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -99,7 +89,7 @@ public class PossessionListActivity extends Fragment{
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "キャンセルしました。", Toast.LENGTH_SHORT).show();
                             }
                         });
                 builder.setCancelable(true);
@@ -119,7 +109,6 @@ public class PossessionListActivity extends Fragment{
     public void onResume() {
         super.onResume();
         setAdapter();
-        Toast.makeText(getContext(), "onResume", Toast.LENGTH_LONG).show();
     }
     //リスト表示
     private void setAdapter() {
