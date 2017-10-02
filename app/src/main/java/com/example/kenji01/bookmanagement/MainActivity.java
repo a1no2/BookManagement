@@ -59,6 +59,10 @@ public class MainActivity extends FragmentActivity {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
                 code = result.getContents();
                 resultText.setText(code);
+
+                Intent i = new Intent(MainActivity.this, RakutenSearch.class);
+                i.putExtra("code",code);
+                startActivity(i);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -70,6 +74,13 @@ public class MainActivity extends FragmentActivity {
     public void RegistrationIntent(View v){
         Intent i = new Intent(MainActivity.this, RegistrationActivity.class);
         i.putExtra("ID","create");
+        startActivity(i);
+    }
+
+
+    public void search(View v) {
+        Intent i = new Intent(MainActivity.this, RakutenSearch.class);
+        i.putExtra("code","");
         startActivity(i);
     }
 

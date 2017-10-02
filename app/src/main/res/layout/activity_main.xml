@@ -59,11 +59,11 @@
                 android:layout_weight="1"
                 android:onClick="tst" />
             <ImageButton
-                android:src="@android:drawable/ic_delete"
+                android:src="@android:drawable/ic_menu_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="tst" />
+                android:onClick="search" />
             <ImageButton
                 android:src="@android:drawable/ic_menu_camera"
                 android:layout_width="0dp"
