@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="tst" />
+                android:onClick="statistics" />
             <ImageButton
                 android:src="@android:drawable/ic_menu_search"
                 android:layout_width="0dp"

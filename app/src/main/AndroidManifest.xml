@@ -25,7 +25,8 @@
         <activity android:name=".WishListActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".RakutenSearch" />
-        <activity android:name=".resultActivity"></activity>
+        <activity android:name=".resultActivity" />
+        <activity android:name=".StatisticsActivity"></activity>
     </application>
 
 </manifest>

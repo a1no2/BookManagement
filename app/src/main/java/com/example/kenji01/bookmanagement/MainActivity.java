@@ -84,6 +84,12 @@ public class MainActivity extends FragmentActivity {
         startActivity(i);
     }
 
+    public void statistics(View v) {
+        Intent i = new Intent(MainActivity.this, StatisticsActivity.class);
+        startActivity(i);
+    }
+
+
     //未実装のボタンの処理
     public void tst(View v) {
         Toast.makeText(this, "未実装", Toast.LENGTH_SHORT).show();
