@@ -32,7 +32,8 @@ public class RakutenSearch extends AppCompatActivity implements LoaderManager.Lo
         code = i.getStringExtra("code");
 
         TextView text = (EditText) findViewById(R.id.txt02);
-        text.setText(code);
+//        text.setText(code);
+
 
         // TextViewを取得
         textView = (TextView)findViewById(R.id.result);

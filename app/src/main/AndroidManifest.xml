@@ -18,12 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <user-sdk
-            android:minSdkVersion="14"/>
+
+        <user-sdk android:minSdkVersion="14" />
+
         <activity android:name=".PossessionListActivity" />
         <activity android:name=".WishListActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".RakutenSearch"></activity>
+        <activity android:name=".RakutenSearch" />
+        <activity android:name=".resultActivity"></activity>
     </application>
 
 </manifest>
