@@ -49,7 +49,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ISBNコード 及び DOIコード"
+                android:text="ISBNコード or DOIコード"
                 android:textSize="24dp" />
 
             <EditText

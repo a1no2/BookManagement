@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
                 code = result.getContents();
                 resultText.setText(code);
 

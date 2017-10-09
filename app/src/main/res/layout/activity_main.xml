@@ -53,11 +53,12 @@
                 android:layout_weight="1"
                 android:onClick="tst" />
             <ImageButton
-                android:src="@android:drawable/ic_delete"
+                android:src="@drawable/statistics"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="statistics" />
+                android:onClick="statistics"
+                android:scaleType="centerInside"/>
             <ImageButton
                 android:src="@android:drawable/ic_menu_search"
                 android:layout_width="0dp"

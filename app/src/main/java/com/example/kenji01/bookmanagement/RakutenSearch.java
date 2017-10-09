@@ -13,16 +13,17 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.Objects;
 
 import static java.util.Arrays.deepToString;
 
-public class RakutenSearch extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONObject>{
-
+public class RakutenSearch extends AppCompatActivity{
     String code;
-    TextView textView;
+//    boolean codeSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,25 +32,25 @@ public class RakutenSearch extends AppCompatActivity implements LoaderManager.Lo
         Intent i = getIntent();
         code = i.getStringExtra("code");
 
-        TextView text = (EditText) findViewById(R.id.txt02);
-//        text.setText(code);
+        TextView text2 = (EditText) findViewById(R.id.txt02);
+        text2.setText(code);
+
+        if (!code.equals("")){
+            getUrl();
+        }
 
 
-        // TextViewを取得
-        textView = (TextView)findViewById(R.id.result);
         //textView.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         findViewById(R.id.bt01).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // buttonイベント発火
-                SearchButtonClick(v);
+                getUrl();
             }
         });
         findViewById(R.id.bt02).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // buttonイベント発火
                 ClearEditText();
             }
         });
@@ -58,12 +59,7 @@ public class RakutenSearch extends AppCompatActivity implements LoaderManager.Lo
         // getLoaderManager().restartLoader(1, null,this);
     }
 
-    //buttonイベント処理
-    private void SearchButtonClick(View v) {
-        // 処理
-        // JSONの取得
-        getLoaderManager().restartLoader(1, null,this);
-    }
+
 
     //テキストの取得処理
     public String[] GetTextBox(){
@@ -109,9 +105,9 @@ public class RakutenSearch extends AppCompatActivity implements LoaderManager.Lo
         editText5.getText().clear();
     }
 
-    //ロード起動
-    @Override
-    public Loader<JSONObject> onCreateLoader(int id, Bundle args) {
+
+
+    private void getUrl(){
         String urlText;
         String keyword="";
         String flag ="";
@@ -171,31 +167,15 @@ public class RakutenSearch extends AppCompatActivity implements LoaderManager.Lo
             //オプション「orFlag=1」でOR検索が可能
             //urlText = "http://192.168.0.3:8080/API/item_search.php?request=" + keyword + page + flag;
             urlText = "http://hiyoko.softether.net:8080/API/item_search.php?request=" + keyword + page + flag;
-            System.out.println(urlText);
+//            System.out.println(urlText);
         }
-        //String urlText = "http://192.168.0.3:8080/API/item_search.php?request=%E3%82%A2%E3%83%AB%E3%83%9A%E3%82%B8%E3%82%AA";
-        JsonLoader jsonLoader = new JsonLoader(this, urlText);
-        jsonLoader.forceLoad();
-        return  jsonLoader;
+
+        Intent i = new Intent(RakutenSearch.this, resultActivity.class);
+        i.putExtra("url",urlText);
+        startActivity(i);
+        finish();
+
     }
 
-    //ロードが完了
-    @Override
-    public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
-        if (data != null) {
 
-            //JSONObject jsonObject = data.getJSONObject("request");
-            //textView.setText(jsonObject.toString());
-            //テキストビューに結果を表示
-            textView.setText(data.toString());
-        }else{
-            Log.d("onLoadFinished", "onLoadFinished error!");
-        }
-    }
-
-    //ロード内容が破棄された？
-    @Override
-    public void onLoaderReset(Loader<JSONObject> loader) {
-        // 処理なし
-    }
 }
