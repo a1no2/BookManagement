@@ -76,10 +76,27 @@
                     <!--android:layout_height="wrap_content"-->
                     <!--android:text="シリーズの選択" />-->
             <!--</RadioGroup>-->
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/seriesSpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/seriesSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="newSeries"
+                    android:textSize="12dp"
+                    android:text="シリーズの\n新規登録" />
+            </LinearLayout>
 
 
 
@@ -106,15 +123,15 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/went_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="欲しいものリスト" />
-                <RadioButton
                     android:id="@+id/have_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="所持リスト" />
+                <RadioButton
+                    android:id="@+id/went_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="欲しいものリスト" />
             </RadioGroup>
 
             <TextView

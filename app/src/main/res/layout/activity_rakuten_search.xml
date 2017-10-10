@@ -29,6 +29,8 @@
                     android:id="@+id/label01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:contentDescription="タイトル"
                     android:text="タイトル" />
 
@@ -160,23 +162,23 @@
 
                 </LinearLayout>
 
-                <android.support.v4.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <!--<android.support.v4.widget.NestedScrollView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
 
-                    <TextView
-                        android:id="@+id/result"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <!--<TextView-->
+                        <!--android:id="@+id/result"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
 
-                        android:scrollbars="vertical"
-                        android:text="ここにJSON結果"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.v4.widget.NestedScrollView>
+                        <!--android:scrollbars="vertical"-->
+                        <!--android:text="ここにJSON結果"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                        <!--app:layout_constraintRight_toRightOf="parent"-->
+                        <!--app:layout_constraintTop_toTopOf="parent" />-->
+                <!--</android.support.v4.widget.NestedScrollView>-->
 
             </LinearLayout>
 
