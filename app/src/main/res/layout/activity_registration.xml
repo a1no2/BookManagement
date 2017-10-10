@@ -24,7 +24,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:text="書籍名"
-                android:textSize="24dp"/>
+                android:textSize="12dp"/>
 
             <EditText
                 android:id="@+id/bookName_editText"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="著書"
-                android:textSize="24dp" />
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/author_editText"
@@ -49,8 +49,45 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="シリーズ"
+                android:textSize="12dp" />
+            <!--<RadioGroup-->
+                <!--android:id="@+id/series_radioGroup"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:focusable="true"-->
+                <!--android:focusableInTouchMode="true"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<RadioButton-->
+                    <!--android:id="@+id/noSeries"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="単発" />-->
+                <!--<RadioButton-->
+                    <!--android:id="@+id/newSeries"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="新しく登録" />-->
+                <!--<RadioButton-->
+                    <!--android:id="@+id/existingSeries"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="シリーズの選択" />-->
+            <!--</RadioGroup>-->
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/seriesSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="ISBNコード or DOIコード"
-                android:textSize="24dp" />
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/code_editText"
@@ -84,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="金額"
-                android:textSize="24dp" />
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/price_editText"
@@ -98,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="購入日"
-                android:textSize="24dp" />
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/purchaseDate_editText"

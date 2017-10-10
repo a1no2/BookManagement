@@ -6,20 +6,34 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener{
     //DB
     private SQLiteDatabase db;
     private DB_helper db_helper;
+
+    int radio_ID;
+    static String seriesName;
+    String newSeries_str;
+
+    boolean insertCancel;
 
 
     //ボタン、テキストフィールド、ラジオボタン
@@ -27,7 +41,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText bookName_editText,author_editText,
             code_editText,price_editText,purchaseDate_editText;
     RadioGroup radioGroup;
+//            series_radioGroup;
     RadioButton have_radio,went_radio;
+//        noSeries,newSeries,existingSeries;
 
     //新しく登録するならcreate　更新なら,そのIDが入る
     String id_;
@@ -52,6 +68,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         price_editText = (EditText)findViewById(R.id.price_editText);
         purchaseDate_editText = (EditText)findViewById(R.id.purchaseDate_editText);
 
+        //シリーズ関連
+//        series_radioGroup = (RadioGroup)findViewById(R.id.series_radioGroup);
+//        noSeries = (RadioButton)findViewById(R.id.noSeries);
+//        newSeries = (RadioButton)findViewById(R.id.newSeries);
+//        existingSeries = (RadioButton)findViewById(R.id.existingSeries);
+
+        //所持、欲しいもの関連
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
         have_radio = (RadioButton)findViewById(R.id.have_radio);
         went_radio = (RadioButton)findViewById(R.id.went_radio);
@@ -61,12 +84,44 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         db_helper = new DB_helper(getApplicationContext());
         db = db_helper.getWritableDatabase();        //読み書き
 
+        seriesName = "";
+        newSeries_str = "";
+        insertCancel = false;
 
-        if (id_.equals("create")){
 
-        } else {
+        //スピナーにシリーズをセット
+//        seriesTable_show();     //シリーズテーブルを表示
+        Spinner seriesSpinner = (Spinner)findViewById(R.id.seriesSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayList<ArrayList<String>> series = getSeries();
+        for (int j = 0 ; j < series.get(0).size() ; j++){
+            adapter.add(series.get(1).get(j));
+        }
+        seriesSpinner.setAdapter(adapter);
+
+        //スピナーのリスナー
+        seriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            // アイテム選択時に呼び出される。
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,int position, long id){
+                Spinner spinner = (Spinner)parent;
+                String item = (String)spinner.getSelectedItem();
+                Toast.makeText(RegistrationActivity.this, "item:" + item, Toast.LENGTH_SHORT).show();
+            }
+            // 何も選択されなかったときに呼び出される。
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0){
+                Toast.makeText(RegistrationActivity.this, "なしなしのなし", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        //更新する場合そのデータをセット
+        if (!id_.equals("create")){
             Cursor cursor = db.query(
-                    DB_helper.TABLE_NAME,
+                    DB_helper.BOOK_TABLE,
                     new String []{DB_helper.BOOK_NAME, DB_helper.AUTHOR, DB_helper.CODE,
                             String.valueOf(DB_helper.HAVE), String.valueOf(DB_helper.PRICE),
                             String.valueOf(DB_helper.PURCHASE_DATE)},
@@ -99,6 +154,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
             //クリアボタン
             case R.id.clear_btn:
                 // 確認ダイアログの生成
@@ -132,11 +188,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             //登録ボタン
             case R.id.registration_btn:
-                int radio_ID = radioGroup.getCheckedRadioButtonId();
+                insertCancel = false;
+                radio_ID = radioGroup.getCheckedRadioButtonId();
+//                int series_ID = series_radioGroup.getCheckedRadioButtonId();
 
                 if (bookName_editText.getText().toString().equals("")) {
                     Toast.makeText(this, "書籍名が空白です", Toast.LENGTH_SHORT).show();
                     break;
+//                } else if (series_ID == -1){
+//                    Toast.makeText(this, "シリーズの選択してください", Toast.LENGTH_SHORT).show();
                 } else if (radio_ID == -1){
                     Toast.makeText(this, "欲しいものリストか所持リストを選択してください", Toast.LENGTH_SHORT).show();
 
@@ -146,10 +206,25 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     db_helper = new DB_helper(getApplicationContext());
                     db = db_helper.getWritableDatabase();
 
-                    RadioButton radio = (RadioButton)findViewById(radio_ID);
-                    String radio_text = radio.getText().toString();
+//                    //単発ものなら0, 新しくシリーズを登録するなら1, シリーズを選択するなら2
+//                    RadioButton series_radio =  (RadioButton)findViewById(series_ID);
+//                    String series_text = series_radio.getText().toString();
+//                    if (series_text.equals("単発")){
+//                        series_ID = 0;
+//                    } else if (series_text.equals("新しく登録")){
+//                        series_ID = 1;
+//                    } else if (series_text.equals("シリーズの選択")){
+//                        series_ID = 2;
+//                        series_text = "getカラム名";
+//                    } else {
+//                        series_ID = 999;
+//                        Toast.makeText(this, "error:seriesID", Toast.LENGTH_SHORT).show();
+//                    }
+
 
                     //所持していたら1 欲しいものリスト0
+                    RadioButton radio = (RadioButton)findViewById(radio_ID);
+                    String radio_text = radio.getText().toString();
                     if (radio_text.equals("欲しいものリスト")){
                         radio_ID = 0;
                     } else if (radio_text.equals("所持リスト")) {
@@ -157,31 +232,51 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         //ありえない値
                         radio_ID = 999;
-                        Toast.makeText(this, "error:radio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "error:radioID", Toast.LENGTH_SHORT).show();
                     }
+
+//                    //新しくカラムを登録
+//                    if (series_ID == 1){
+//
+//                    }
+//                    if (seriesName.equals("")) {
+//                        int column = getcolumn();
+//                        seriesName = "シリーズ" + column;
+//                    }
+//                    newSeries_str = "insert into " + db_helper.SERIES_TABLE + " ( " +  db_helper.SERIES_NAME + " ) "
+//                            + " values ( '" + seriesName + "' );";
+//                    try {
+//                        db.execSQL(newSeries_str);
+//                    } catch (SQLException e){
+//                        Log.e("ceriesError", e + "");
+//                    }
 
 
                     String SQL_str = "insert into "
-                            + db_helper.TABLE_NAME + " ( "
+                            + db_helper.BOOK_TABLE + " ( "
                             + db_helper.BOOK_NAME + "," + db_helper.AUTHOR + "," + db_helper.CODE + ","
+//                            + db_helper.BOOK_NAME + "," + db_helper.AUTHOR + "," + db_helper.SERIES_ID + "," + db_helper.CODE + ","
                             + db_helper.HAVE + "," + db_helper.PRICE + "," + db_helper.PURCHASE_DATE + ") "
                             + "values ("
                             + "'" + bookName_editText.getText().toString() + "',"
                             + "'" + author_editText.getText().toString() + "',"
+//                            + "'" + getcolumn() +"',"
                             + "'" + code_editText.getText().toString() + "',"
                             + "'" + radio_ID + "',"
                             + "'" + price_editText.getText().toString() + "',"
                             + "'" + purchaseDate_editText.getText().toString() + "'"
                             + " );";
 
+
                     try{
                         db.execSQL(SQL_str);
                     }catch (SQLException e) {
-                        Toast.makeText(this, "SQLexecSQL\n" + e, Toast.LENGTH_LONG).show();
-                        break;
+                        Toast.makeText(getApplicationContext(), "SQLexecSQL\n" + e, Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(this, "登録完了しました！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "登録完了しました！", Toast.LENGTH_SHORT).show();
                     this.finish();
+
+
 
                     //更新
                 } else {
@@ -209,7 +304,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                     String where = db_helper.BOOK_ID + " = " + id_;
                     db.update(
-                            db_helper.TABLE_NAME,
+                            db_helper.BOOK_TABLE,
                             valuse,
                             where,
                             null
@@ -220,4 +315,50 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
+
+
+
+
+
+    //シリーズテーブル出力
+    private void seriesTable_show(){
+        //シリーズテーブル一覧を表示
+        ArrayList<ArrayList<String>> series = getSeries();
+        ArrayList<String> id = new ArrayList<String>();
+        ArrayList<String> name = new ArrayList<String>();
+        String str = "";
+        for (int tst = 0 ; tst < series.get(0).size() ; tst++){
+            str += series.get(0).get(tst);
+            str += series.get(1).get(tst) + "\n";
+        }
+        Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
+    }
+
+
+    //シリーズテーブル返す
+    private ArrayList<ArrayList<String>> getSeries(){
+        ArrayList<ArrayList<String>> Series = new ArrayList<ArrayList<String>>();
+        Cursor c = db.query(
+                DB_helper.SERIES_TABLE,
+                new String[]{String.valueOf(DB_helper.SERIES_ID),DB_helper.SERIES_NAME},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        ArrayList<String> id = new ArrayList<String>();
+        ArrayList<String> name = new ArrayList<String>();
+        while (c.moveToNext()){
+            id.add(c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_ID)) + ":");
+            name.add(c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_NAME)));
+        }
+        Series.add(id);
+        Series.add(name);
+        return Series;
+    }
+
+
+
+
 }

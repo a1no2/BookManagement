@@ -75,7 +75,7 @@ public class PossessionListActivity extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.delete(
-                                db_helper.TABLE_NAME,
+                                db_helper.BOOK_TABLE,
                                 db_helper.BOOK_ID + " = ?",
                                 new String[] {id_arr.get(remove_id)}
                         );
@@ -117,7 +117,7 @@ public class PossessionListActivity extends Fragment{
         id_arr = new ArrayList<>();
 
         c = db.query(
-                DB_helper.TABLE_NAME,
+                DB_helper.BOOK_TABLE,
                 new String[]{DB_helper.BOOK_NAME,DB_helper.BOOK_ID},
                 DB_helper.HAVE + " = ?",
                 new String[] {"1"},
@@ -130,6 +130,7 @@ public class PossessionListActivity extends Fragment{
             id_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
 
         }
+        c.close();
         adapter = new ArrayAdapter<String>(
                 getContext(),
                 android.R.layout.simple_dropdown_item_1line,
