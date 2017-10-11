@@ -30,10 +30,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private DB_helper db_helper;
 
     int radio_ID;
-    static String seriesName;
-    String newSeries_str;
-    static int seriesID;
-    boolean insertCancel;
 
     //ボタン、テキストフィールド、ラジオボタン
     Button clear_btn,registration_btn;
@@ -44,8 +40,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     //スピーナー
     Spinner seriesSpinner;
-//    int spinnerPositionHint;
-//    int spinnerPosition;
+    String item;
+    int seriesID;
+    int spinnerID;
 
 
     //新しく登録するならcreate　更新なら,そのIDが入る
@@ -81,45 +78,20 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         db_helper = new DB_helper(getApplicationContext());
         db = db_helper.getWritableDatabase();        //読み書き
 
-        seriesName = "";
-        newSeries_str = "";
-        insertCancel = false;
-
-//        spinnerPosition = 1;
-//        spinnerPositionHint = 1;
-
-
-
+        seriesTable_show();
 
         //スピーナー関連
         seriesSpinner = (Spinner)findViewById(R.id.seriesSpinner);
-        setSpinner();   //スピナーにシリーズ一覧をセット
         //スピナーのリスナー
         seriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             // アイテム選択時に呼び出される。
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,int position, long id){
                 Spinner spinner = (Spinner)parent;
-                String item = (String)spinner.getSelectedItem();
+                item = (String)spinner.getSelectedItem();
+                spinnerID = position;
 //                spinnerPosition = spinner.getSelectedItemPosition();
-                Toast.makeText(RegistrationActivity.this, "item:" + item, Toast.LENGTH_SHORT).show();
-
-                Cursor cursor = db.query(
-                        DB_helper.SERIES_TABLE,
-                        new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
-                        DB_helper.SERIES_NAME + " = ?",
-                        new String[] {item},
-                        null,
-                        null,
-                        null,
-                        null
-                );
-                while (cursor.moveToNext()){
-                    seriesID = cursor.getInt(cursor.getColumnIndexOrThrow(DB_helper.SERIES_ID));
-                }
-
-
-
+                Toast.makeText(RegistrationActivity.this, position + ":" + item, Toast.LENGTH_SHORT).show();
             }
             // 何も選択されなかったときに呼び出される。
             @Override
@@ -133,8 +105,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
         //更新する場合そのデータをセット
-        if (!id_.equals("create")){
-            Cursor cursor = db.query(
+        if (id_.equals("create")){
+            spinnerID = 1;
+        } else {
+            Cursor c = db.query(
                     DB_helper.BOOK_TABLE,
                     new String []{DB_helper.BOOK_NAME, DB_helper.AUTHOR, DB_helper.CODE,
                             DB_helper.SERIES_ID,
@@ -147,45 +121,26 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     null,
                     null
             );
-            String str = "";
-            while (cursor.moveToNext()){
-                bookName_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
-                str = cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.SERIES_ID));
-                author_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.AUTHOR)));
-                code_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.CODE)));
-                price_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.PRICE)));
-                purchaseDate_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.PURCHASE_DATE)));
+            while (c.moveToNext()){
+                bookName_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
+                seriesID = c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID));
+                author_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.AUTHOR)));
+                code_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.CODE)));
+                price_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.PRICE)));
+                purchaseDate_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.PURCHASE_DATE)));
 
-                String have = cursor.getString(cursor.getColumnIndexOrThrow(DB_helper.HAVE));
+                String have = c.getString(c.getColumnIndexOrThrow(DB_helper.HAVE));
                 if (have.equals("1" )){
                     have_radio.setChecked(true);
                 } else {
                     went_radio.setChecked(true);
                 }
             }
-            cursor.close();
-            toast(str,true);
-
-            Cursor cursor2 = db.query(
-                    DB_helper.SERIES_TABLE,
-                    new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
-            int j = 0;
-            while (cursor2.moveToNext()){
-                j++;
-//                if (spinnerPositionHint == cursor.getInt(cursor.getColumnIndexOrThrow(DB_helper.SERIES_ID))){
-//                    spinnerPosition = j;
-//                }
-            }
-            cursor2.close();
-//            seriesSpinner.setSelection(spinnerPosition);
+            c.close();
+            spinnerID = getSpinnerID(seriesID);
+            toast("シリーズID:"+(seriesID)+"\nスピナーID:"+spinnerID,true);
         }
+        setSpinner();
     }
 
 
@@ -227,9 +182,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             //登録ボタン
             case R.id.registration_btn:
-                insertCancel = false;
                 radio_ID = radioGroup.getCheckedRadioButtonId();
-                ArrayList<ArrayList<String>> series = getSeries();
+//                ArrayList<ArrayList<String>> series = getSeries();
+
 
                 if (bookName_editText.getText().toString().equals("")) {
                     Toast.makeText(this, "書籍名が空白です", Toast.LENGTH_SHORT).show();
@@ -238,7 +193,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     Toast.makeText(this, "欲しいものリストか所持リストを選択してください", Toast.LENGTH_SHORT).show();
 
 
-                //新規登録
+                    //新規登録
                 } else if (id_.equals("create")){
                     db_helper = new DB_helper(getApplicationContext());
                     db = db_helper.getWritableDatabase();
@@ -255,7 +210,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         radio_ID = 999;
                         Toast.makeText(this, "error:radioID", Toast.LENGTH_SHORT).show();
                     }
-
+                    seriesID = getSeriesID(spinnerID);
                     String SQL_str = "insert into "
                             + db_helper.BOOK_TABLE + " ( "
                             + db_helper.BOOK_NAME + "," + db_helper.AUTHOR + "," + db_helper.SERIES_ID + "," + db_helper.CODE + ","
@@ -295,7 +250,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         radio_ID = 999;     //ありえない値
                         Toast.makeText(this, "error:radio", Toast.LENGTH_SHORT).show();
                     }
-
+                    seriesID = getSeriesID(spinnerID);
                     ContentValues valuse = new ContentValues();
                     valuse.put(db_helper.BOOK_NAME, bookName_editText.getText().toString());
                     valuse.put(db_helper.SERIES_ID, String.valueOf(seriesID));
@@ -321,11 +276,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
 
-    public void onResume(){
-        super.onResume();
-        setSpinner();
-    }
-
     //スピナーにシリーズをセット
     private void setSpinner(){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
@@ -335,7 +285,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             adapter.add(series.get(1).get(j));
         }
         seriesSpinner.setAdapter(adapter);
-//        seriesSpinner.setSelection(spinnerPosition);
+        seriesSpinner.setSelection((spinnerID));
+//            seriesSpinner.setSelection(1);
 
     }
 
@@ -345,8 +296,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private void seriesTable_show(){
         //シリーズテーブル一覧を表示
         ArrayList<ArrayList<String>> series = getSeries();
-        ArrayList<String> id = new ArrayList<String>();
-        ArrayList<String> name = new ArrayList<String>();
         String str = "";
         for (int tst = 0 ; tst < series.get(0).size() ; tst++){
             str += series.get(0).get(tst);
@@ -354,11 +303,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }
         Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
     }
-
-
     //シリーズテーブル返す
     private ArrayList<ArrayList<String>> getSeries(){
-        ArrayList<ArrayList<String>> Series = new ArrayList<ArrayList<String>>();
+        ArrayList<ArrayList<String>> series = new ArrayList<ArrayList<String>>();
         Cursor c = db.query(
                 DB_helper.SERIES_TABLE,
                 new String[]{String.valueOf(DB_helper.SERIES_ID),DB_helper.SERIES_NAME},
@@ -374,17 +321,19 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             id.add(c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_ID)) + ":");
             name.add(c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_NAME)));
         }
-        Series.add(id);
-        Series.add(name);
-        return Series;
+        c.close();
+        series.add(id);
+        series.add(name);
+        return series;
     }
 
 
+    //トースト発行するだけ
     private void toast(String str,boolean lengthShort){
         if (lengthShort){
             Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         } else {
-            toast(str, true);
+            Toast.makeText(this, str, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -407,7 +356,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 try{
                     db.execSQL(SQL_str);
                 }catch (SQLException e) {
-                    toast("SQLexecSQL\n" + e, true);
+                    toast("SQLException\n" + e, true);
                 }
                 toast("登録完了しました", true);
                 setSpinner();
@@ -424,5 +373,55 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+
+
+
+    //シリーズのid貰ったら、何番目のレコードか(spinnerID)を返す
+    private int getSpinnerID(int id){
+//        String name;
+        Cursor c = db.query(
+                DB_helper.SERIES_TABLE,
+                new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        int recordNumber = 0;
+        while (c.moveToNext()){
+            if (id == c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID))){
+                break;
+            }
+            recordNumber++;
+        }
+        c.close();
+        return recordNumber;
+    }
+    //シリーズのレコードナンバー(spinnerID)を貰ったら、その番号のシリーズidを返す
+    private int getSeriesID(int recordNumber){
+        recordNumber++;
+        Cursor c = db.query(
+                DB_helper.SERIES_TABLE,
+                new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        int id = 0;
+        while (c.moveToNext()){
+            id++;
+            if (recordNumber == id){
+                id = c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID));
+                break;
+            }
+        }
+        c.close();
+        return id;
+    }
 
 }
