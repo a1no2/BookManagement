@@ -130,7 +130,7 @@ public class PossessionListActivity extends Fragment{
             id_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
 
         }
-        c.close();
+//        c.close();
         adapter = new ArrayAdapter<String>(
                 getContext(),
                 android.R.layout.simple_dropdown_item_1line,
