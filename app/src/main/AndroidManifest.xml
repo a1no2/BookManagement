@@ -26,7 +26,8 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".RakutenSearch" />
         <activity android:name=".resultActivity" />
-        <activity android:name=".StatisticsActivity"></activity>
+        <activity android:name=".StatisticsActivity" />
+        <activity android:name=".seriesListActivity"></activity>
     </application>
 
 </manifest>

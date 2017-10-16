@@ -89,6 +89,13 @@ public class MainActivity extends FragmentActivity {
         startActivity(i);
     }
 
+    public void seriesTest(View v){
+        Intent i = new Intent(MainActivity.this, seriesListActivity.class);
+        i.putExtra("seriesID","1");
+        i.putExtra("seriesName","単発");
+        startActivity(i);
+    }
+
 
     //未実装のボタンの処理
     public void tst(View v) {

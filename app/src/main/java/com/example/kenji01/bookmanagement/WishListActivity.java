@@ -43,11 +43,6 @@ public class WishListActivity extends Fragment {
         db = db_helper.getWritableDatabase();
         setAdapter();
 
-        //インスタンス生成して読み書き可能で取得
-        db_helper = new DB_helper(getContext());
-        db = db_helper.getWritableDatabase();
-        setAdapter();
-
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

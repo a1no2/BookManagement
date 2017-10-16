@@ -5,6 +5,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginRight="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_anchor="@+id/LinearLayout"
+        app:layout_anchorGravity="bottom|right|end"
+        android:onClick="RegistrationIntent"/>
+
     <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
@@ -12,14 +22,15 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-        <TextView
+        <Button
             android:id="@+id/tst"
-            android:text="読み取ったコードの表示領域"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="16sp"/>
+            android:text="シリーズ表示のテスト"
+            android:onClick="seriesTest"
+            android:textSize="16sp" />
 
 
         <android.support.v4.view.ViewPager
@@ -27,17 +38,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8">
+
             <android.support.v4.view.PagerTitleStrip
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:background="#CCCCCC"
-                android:textColor="#000000"
+                android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:textColor="#000000" />
         </android.support.v4.view.ViewPager>
-
-
 
 
         <!--下のメニュー-->
@@ -46,45 +56,41 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <ImageButton
-                android:src="@android:drawable/ic_delete"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="tst" />
+                android:onClick="scanBarcode"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_camera" />
+
             <ImageButton
-                android:src="@drawable/statistics"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="search"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_search" />
+
+            <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="statistics"
-                android:scaleType="centerInside"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/statistics" />
+
             <ImageButton
-                android:src="@android:drawable/ic_menu_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="search" />
-            <ImageButton
-                android:src="@android:drawable/ic_menu_camera"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="scanBarcode" />
+                android:onClick="tst"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_delete" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:layout_marginRight="16dp"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@id/LinearLayout"
-        app:layout_anchorGravity="bottom|right|end"
-        android:onClick="RegistrationIntent"/>
-
 
 
 </android.support.design.widget.CoordinatorLayout>
