@@ -48,7 +48,7 @@ public class seriesListActivity extends AppCompatActivity {
 
         TextView title = (TextView)findViewById(R.id.title);
         listView = (ListView)findViewById(R.id.listView);
-        title.setText("所持チェック　　" + series[1]);
+        title.setText(series[1]);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,7 +59,6 @@ public class seriesListActivity extends AppCompatActivity {
             }
         });
         setListView();
-
 
 
         //削除 アイテムのロングクリック
@@ -132,9 +131,10 @@ public class seriesListActivity extends AppCompatActivity {
         while (c.moveToNext()){
             Bitmap bmp;
             if (c.getInt(c.getColumnIndexOrThrow(DB_helper.HAVE)) == 1){
-                bmp = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_on_background);
+                bmp = BitmapFactory.decodeResource(getResources(), R.drawable.shoji);
             } else {
-                bmp = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
+                bmp = BitmapFactory.decodeResource(getResources(), R.drawable.hoshii);
+//                bmp = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
             }  // 今回はサンプルなのでデフォルトのAndroid Iconを利用
             Item item = new Item(bmp, c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
             array.add(item);

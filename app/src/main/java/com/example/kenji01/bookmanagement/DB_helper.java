@@ -57,8 +57,7 @@ public class DB_helper extends SQLiteOpenHelper{
                 + SERIES_ID         +" integer primary key autoincrement, "
                 + SERIES_NAME       +" text"
                 + ");");
-        db.execSQL("insert into "+ SERIES_TABLE+ " ("+ SERIES_NAME + " ) values ( '単発' );"
-        );
+        db.execSQL("insert into "+ SERIES_TABLE+ " ("+ SERIES_NAME + " ) values ( '単発' );");
     }
 
     //DBのバージョンが変わった時の処理
