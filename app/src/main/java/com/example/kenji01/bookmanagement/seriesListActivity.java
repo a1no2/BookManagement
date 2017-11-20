@@ -136,7 +136,7 @@ public class seriesListActivity extends AppCompatActivity {
                 bmp = BitmapFactory.decodeResource(getResources(), R.drawable.hoshii);
 //                bmp = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
             }  // 今回はサンプルなのでデフォルトのAndroid Iconを利用
-            Item item = new Item(bmp, c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
+            Item item = new Item(bmp, c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)),c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_ID)));
             array.add(item);
 
             str += c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME));

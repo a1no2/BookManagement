@@ -46,19 +46,19 @@
                 android:hint=""
                 android:layout_marginBottom="8dp" />
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="シリーズ"-->
-                <!--android:textSize="12dp" />-->
-            <!--<RadioGroup-->
-                <!--android:id="@+id/series_radioGroup"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:focusable="true"-->
-                <!--android:focusableInTouchMode="true"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:orientation="horizontal">-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="シリーズ"
+                android:textSize="12dp" />
+            <RadioGroup
+                android:id="@+id/series_radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
                 <!--<RadioButton-->
                     <!--android:id="@+id/noSeries"-->
@@ -75,28 +75,28 @@
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:text="シリーズの選択" />-->
-            <!--</RadioGroup>-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:weightSum="4">-->
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
-                <!--<android.support.v7.widget.AppCompatSpinner-->
-                    <!--android:id="@+id/seriesSpinner"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="3" />-->
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/seriesSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
 
-                <!--<Button-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:onClick="newSeries"-->
-                    <!--android:textSize="12dp"-->
-                    <!--android:text="シリーズの\n新規登録" />-->
-            <!--</LinearLayout>-->
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="newSeries"
+                    android:textSize="12dp"
+                    android:text="シリーズの\n新規登録" />
+            </LinearLayout>
 
 
 

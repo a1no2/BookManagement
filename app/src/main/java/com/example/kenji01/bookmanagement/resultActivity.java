@@ -62,6 +62,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
             //textView.setText(jsonObject.toString());
             //テキストビューに結果を表示
             resultText.setText(data.toString());
+//            String tst = data.getString("")
         } else {
             Log.d("onLoadFinished", "onLoadFinished error!");
         }

@@ -82,27 +82,28 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         db_helper = new DB_helper(getApplicationContext());
         db = db_helper.getWritableDatabase();        //読み書き
 
-//        seriesTable_show();
+        seriesTable_show();
+
 
         //スピーナー関連
-//        seriesSpinner = (Spinner)findViewById(R.id.seriesSpinner);
+        seriesSpinner = (Spinner)findViewById(R.id.seriesSpinner);
         //スピナーのリスナー
-//        seriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        seriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 //            // アイテム選択時に呼び出される。
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view,int position, long id){
-//                Spinner spinner = (Spinner)parent;
-//                item = (String)spinner.getSelectedItem();
-////                spinnerID = position;
-//                spinnerID = getSeriesID(item);
-////                spinnerPosition = spinner.getSelectedItemPosition();
-//                Toast.makeText(RegistrationActivity.this, position + ":" + item, Toast.LENGTH_SHORT).show();
-//            }
-//            // 何も選択されなかったときに呼び出される。
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0){
-//            }
-//        });
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,int position, long id){
+                Spinner spinner = (Spinner)parent;
+                item = (String)spinner.getSelectedItem();
+                spinnerID = position;
+                seriesID = spinnerID + 1;
+//                spinnerID = spinner.getSelectedItemPosition();
+                Toast.makeText(RegistrationActivity.this, "position:" + position + "\nitem:" + item + "\n" + "getSelectedItemPosition:"  + spinnerID, Toast.LENGTH_SHORT).show();
+            }
+            // 何も選択されなかったときに呼び出される。
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0){
+            }
+        });
 
 
 
@@ -112,6 +113,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         //更新する場合そのデータをセット
         if (id_.equals("create")){
             spinnerID = 0;
+            seriesID = spinnerID + 1;
         } else {
             Cursor c = db.query(
                     DB_helper.BOOK_TABLE,
@@ -142,10 +144,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             c.close();
-//            spinnerID = getSpinnerID(seriesID);
+            spinnerID = seriesID -1;
             toast("シリーズID:"+(seriesID)+"\nスピナーID:"+spinnerID,true);
         }
-//        setSpinner();
+        setSpinner();
     }
 
 
@@ -286,10 +288,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ArrayList<ArrayList<String>> series = getSeries();
-//        try{
-//        if(series.get(0).size()>0){
+
         int tst = series.get(0).size();
-//        for (int j = 0 ; j <= count/*series.get(0).size()*/ ; j++){
 
         for (int j = 0; j<tst; j++){
             if(!series.get(1).get(j).equals("風で頭痛い")){
@@ -297,10 +297,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             }
         }
         seriesSpinner.setAdapter(adapter);
-//        seriesSpinner.setSelection((spinnerID));
-
-//        }
-//            seriesSpinner.setSelection(1);
+        seriesSpinner.setSelection(spinnerID);
 
     }
 
@@ -316,7 +313,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             str += series.get(1).get(j) + "\n";
             count = j+1;
         }
-//        Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
+        Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
     }
     //シリーズテーブル返す
     private ArrayList<ArrayList<String>> getSeries(){
@@ -391,74 +388,5 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
 
-    //シリーズのid貰ったら、何番目のレコードか(spinnerID)を返す
-    private int getSpinnerID(int id){
-//        String name;
-        Cursor c = db.query(
-                DB_helper.SERIES_TABLE,
-                new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        int recordNumber = 0;
-        while (c.moveToNext()){
-            if (id == c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID))){
-                break;
-            }
-            recordNumber++;
-        }
-        c.close();
-        return recordNumber;
-    }
-    //シリーズのレコードナンバー(spinnerID)を貰ったら、その番号のシリーズidを返す ごみいいいいいいいいいい
-    private int getSeriesID(int recordNumber){
-        recordNumber++;
-        Cursor c = db.query(
-                DB_helper.SERIES_TABLE,
-                new String []{DB_helper.SERIES_ID, DB_helper.SERIES_NAME},
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        int id = 0;
-        while (c.moveToNext()){
-            id++;
-            if (recordNumber == id){
-                id = c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID));
-                break;
-            }
-        }
-        c.close();
-        return id;
-    }
-    //シリーズ名貰ったらid返す
-    private int getSeriesID(String seriesName){
-        Cursor c = db.query(
-                DB_helper.BOOK_TABLE,
-                new String[]{DB_helper.BOOK_NAME,DB_helper.SERIES_ID},
-                DB_helper.HAVE + " = ?",
-                new String[] {"1"},
-                null,
-                null,
-                DB_helper.BOOK_NAME + ""
-        );
-        int id = 0;
-        while (c.moveToNext()){
-            id++;
-            if (seriesName.equals(c.getString((c.getColumnIndexOrThrow(DB_helper.BOOK_NAME))))){
-                id = c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID));
-                break;
-            }
-        }
-        c.close();
-        return id;
-    }
 
 }
