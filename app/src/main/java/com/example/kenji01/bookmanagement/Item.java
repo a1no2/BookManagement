@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 public class Item {
     private Bitmap mThumbnail = null;
     private String mTitle = null;
-    private String mSeriesID = null;
+    private String mFlag = null;
 
     /**
      * 空のコンストラクタ
@@ -20,13 +20,13 @@ public class Item {
      * コンストラクタ
      * @param thumbnail サムネイル画像
      * @param title タイトル
-     * @param seriesID シリーズid
+     *
      *
      */
-    public Item(Bitmap thumbnail, String title, String seriesID) {
+    public Item(Bitmap thumbnail, String title, String flag) {
         mThumbnail = thumbnail;
         mTitle = title;
-        mSeriesID = seriesID;
+        mFlag = flag;
     }
 
     /**
@@ -44,10 +44,13 @@ public class Item {
     public void setmTitle(String title) {
         mTitle = title;
     }
-
-    public void setmSeriesID(String seriesID){
-        mSeriesID = seriesID;
+    public void setmFlag(String flag){
+        mFlag = flag;
     }
+
+//    public void setmSeriesID(String seriesID){
+//        mSeriesID = seriesID;
+//    }
 
     /**
      * サムネイル画像を取得
@@ -64,8 +67,11 @@ public class Item {
     public String getTitle() {
         return mTitle;
     }
-
-    public String  getSeriesID(){
-        return mSeriesID;
+    public String getmFlag(){
+        return mFlag;
     }
+
+//    public String  getSeriesID(){
+//        return mSeriesID;
+//    }
 }

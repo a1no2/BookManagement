@@ -23,7 +23,8 @@ public class seriesListActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private DB_helper db_helper;
     Cursor c;
-    String[] series;
+    String series;
+    String gm_Str;
 
     ArrayList<String> id_arr;
     ArrayList<String> name_arr;
@@ -38,17 +39,14 @@ public class seriesListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_series_list);
 
         Intent intent = getIntent();
-        series = new String[]{
-                intent.getStringExtra("seriesID"),
-                intent.getStringExtra("seriesName")
-        };
+        series = intent.getStringExtra("seriesName");
 
         db_helper = new DB_helper(getApplicationContext());
         db = db_helper.getWritableDatabase();
 
         TextView title = (TextView)findViewById(R.id.title);
         listView = (ListView)findViewById(R.id.listView);
-        title.setText(series[1]);
+        title.setText(series);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,12 +114,25 @@ public class seriesListActivity extends AppCompatActivity {
     private void setListView(){
         id_arr = new ArrayList<>();
         name_arr = new ArrayList<>();
+        Cursor gm = db.query(
+                DB_helper.SERIES_TABLE,
+                new String[]{DB_helper.SERIES_ID},
+                DB_helper.SERIES_NAME + " = ?",
+                new String[] {series},
+                null,
+                null,
+                DB_helper.SERIES_ID + ""
+        );
+        while (gm.moveToNext()){
+            gm_Str = gm.getString(gm.getColumnIndexOrThrow(DB_helper.SERIES_ID));
+        }
+        gm.close();
 
         c = db.query(
                 DB_helper.BOOK_TABLE,
                 new String[]{DB_helper.BOOK_NAME,DB_helper.BOOK_ID,DB_helper.HAVE},
                 DB_helper.SERIES_ID + " = ?",
-                new String[] {series[0]},
+                new String[] {gm_Str},
                 null,
                 null,
                 DB_helper.BOOK_NAME + ""
@@ -136,7 +147,7 @@ public class seriesListActivity extends AppCompatActivity {
                 bmp = BitmapFactory.decodeResource(getResources(), R.drawable.hoshii);
 //                bmp = BitmapFactory.decodeResource(getResources(), android.R.drawable.checkbox_off_background);
             }  // 今回はサンプルなのでデフォルトのAndroid Iconを利用
-            Item item = new Item(bmp, c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)),c.getString(c.getColumnIndexOrThrow(DB_helper.SERIES_ID)));
+            Item item = new Item(bmp, c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)),"1");
             array.add(item);
 
             str += c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME));

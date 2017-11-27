@@ -1,10 +1,13 @@
 package com.example.kenji01.bookmanagement;
 
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +31,7 @@ public class WishListActivity extends Fragment {
     private SQLiteDatabase db;
     private DB_helper db_helper;
     //データベースの参照位置を保持
-    private Cursor c;
+    private Cursor c01;
 
     //くそこーど 削除
     public static int remove_id;
@@ -46,9 +49,16 @@ public class WishListActivity extends Fragment {
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Item item = (Item)list.getItemAtPosition(position);
+            if (item.getmFlag().equals("1")){
+                Intent i = new Intent(getActivity(), seriesListActivity.class);
+                i.putExtra("seriesName",item.getTitle());
+                startActivity(i);
+            } else {
                 Intent i = new Intent(getActivity(), RegistrationActivity.class);
                 i.putExtra("ID",id_arr.get(position));
                 startActivity(i);
+            }
             }
         });
 
@@ -58,39 +68,44 @@ public class WishListActivity extends Fragment {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
+                Item item = (Item)list.getItemAtPosition(position);
+                Bitmap bm = item.getThumbnail();
 
-                c.moveToPosition(position);
+                if (item.getmFlag().equals("1")) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("項目の削除");
-                builder.setMessage("この項目を削除してよろしいですか？");
+                } else {
+                    c01.moveToPosition(position);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("項目の削除");
+                    builder.setMessage("この項目を削除してよろしいですか？");
 //                builder.setCancelable(false);
-                remove_id = position;
-                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        db.delete(
-                                db_helper.BOOK_TABLE,
-                                db_helper.BOOK_ID + " = ?",
-                                new String[] {id_arr.get(remove_id)}
-                        );
-                        setAdapter();
-                        Toast.makeText(getContext(), "削除しました。", Toast.LENGTH_SHORT).show();
+                    remove_id = position;
+                    // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                    builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.delete(
+                                    db_helper.BOOK_TABLE,
+                                    db_helper.BOOK_ID + " = ?",
+                                    new String[] {id_arr.get(remove_id)}
+                            );
+                            setAdapter();
+                            Toast.makeText(getContext(), "削除しました。", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
-                // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-                builder.setNegativeButton("NO",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "キャンセルしました。", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                builder.setCancelable(true);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                        }
+                    });
+                    // アラートダイアログの否定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+                    builder.setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(getContext(), "キャンセルしました。", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    builder.setCancelable(true);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
                 return true;
             }
         });
@@ -111,28 +126,44 @@ public class WishListActivity extends Fragment {
         list = (ListView) v.findViewById(R.id.list_w);
         title_arr = new ArrayList<>();
         id_arr = new ArrayList<>();
+        ArrayList<Item> array = new ArrayList<>();
 
-        c = db.query(
+
+
+        c01 = db.query(
                 DB_helper.BOOK_TABLE,
-                new String[]{DB_helper.BOOK_NAME,DB_helper.BOOK_ID},
+                new String[]{DB_helper.BOOK_NAME,DB_helper.BOOK_ID,DB_helper.SERIES_ID},
                 DB_helper.HAVE + " = ?",
                 new String[] {"0"},
                 null,
                 null,
                 DB_helper.BOOK_NAME + ""
         );
-        while (c.moveToNext()){
-            title_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
-            id_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
+        while (c01.moveToNext()){
+//            if (c01.getInt(c01.getColumnIndexOrThrow(DB_helper.SERIES_ID)) == 1){
+                Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.book);
+                Item item = new Item(bmp,c01.getString(c01.getColumnIndexOrThrow(DB_helper.BOOK_NAME)),"2");
+                array.add(item);
+
+                title_arr.add(c01.getString(c01.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
+                id_arr.add(c01.getString(c01.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
+//            }
+
 
         }
 //        c.close();
-        adapter = new ArrayAdapter<String>(
-                getContext(),
-                android.R.layout.simple_dropdown_item_1line,
-                title_arr
-        );
+//        adapter = new ArrayAdapter<String>(
+//                getContext(),
+//                android.R.layout.simple_dropdown_item_1line,
+//                title_arr
+//        );
+//        list.setAdapter(adapter);
+        ItemAdapter adapter = new ItemAdapter(getContext(), R.layout.item_layout, array);
         list.setAdapter(adapter);
+    }
+
+    private void tngt(String str){
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
     }
 
 }

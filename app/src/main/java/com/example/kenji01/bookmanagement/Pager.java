@@ -19,9 +19,9 @@ public class Pager extends FragmentStatePagerAdapter {
 
         switch (i) {
             case 0:
-                return new PossessionListActivity();
-            default:
                 return new WishListActivity();
+            default:
+                return new PossessionListActivity();
         }
     }
 
@@ -34,9 +34,9 @@ public class Pager extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         String pageName;
         if (position == 0){
-            pageName = "所持リスト";
-        } else if (position == 1){
             pageName = "欲しい物リスト";
+        } else if (position == 1){
+            pageName = "所持,シリーズリスト";
         } else {
             pageName = "???";
         }

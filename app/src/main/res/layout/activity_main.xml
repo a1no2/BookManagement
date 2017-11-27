@@ -22,17 +22,16 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-        <Button
-            android:id="@+id/tst"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:gravity="center"
-            android:onClick="seriesTest"
-            android:text="シリーズ表示のテスト"
-            android:textColor="#00000000"
-            android:textSize="16sp" />
+        <!--<Button-->
+            <!--android:id="@+id/tst"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:onClick="seriesTest"-->
+            <!--android:text="シリーズ表示のテスト"-->
+            <!--android:textColor="#00000000"-->
+            <!--android:textSize="16sp" />-->
 
 
 
@@ -40,7 +39,7 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8">
+            android:layout_weight="9">
 
             <android.support.v4.view.PagerTitleStrip
                 android:layout_width="match_parent"
@@ -60,21 +59,14 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="scanBarcode"
-                android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_camera" />
 
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="search"
+                android:onClick="option"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_search" />
+                android:src="@android:drawable/ic_menu_manage" />
 
             <ImageButton
                 android:layout_width="0dp"
@@ -88,9 +80,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="tst"
+                android:onClick="search"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_delete" />
+                android:src="@android:drawable/ic_menu_search" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="scanBarcode"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
     </LinearLayout>

@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(
                 new Pager(getSupportFragmentManager())
         );
-        resultText = (TextView)findViewById(R.id.tst);
+//        resultText = (TextView)findViewById(R.id.tst);
     }
 
 
@@ -91,8 +91,13 @@ public class MainActivity extends FragmentActivity {
 
     public void seriesTest(View v){
         Intent i = new Intent(MainActivity.this, seriesListActivity.class);
-        i.putExtra("seriesID","1");
+//        i.putExtra("seriesID","1");
         i.putExtra("seriesName","単発");
+        startActivity(i);
+    }
+
+    public void option(View v){
+        Intent i = new Intent(MainActivity.this, OptionActivity.class);
         startActivity(i);
     }
 
