@@ -35,7 +35,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     //ボタン、テキストフィールド、ラジオボタン
     Button clear_btn,registration_btn;
-    EditText bookName_editText,author_editText,
+    EditText title_editText,author_editText,
             code_editText,price_editText,purchaseDate_editText;
     RadioGroup radioGroup;
     RadioButton have_radio,went_radio;
@@ -66,7 +66,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         registration_btn = (Button)findViewById(R.id.registration_btn);
         registration_btn.setOnClickListener(this);
 
-        bookName_editText = (EditText)findViewById(R.id.bookName_editText);
+        title_editText = (EditText)findViewById(R.id.title_editText);
         author_editText = (EditText)findViewById(R.id.author_editText);
         code_editText = (EditText)findViewById(R.id.code_editText);
         price_editText = (EditText)findViewById(R.id.price_editText);
@@ -111,9 +111,23 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
         //更新する場合そのデータをセット
-        if (id_.equals("create")){
+        if (id_.equals("create")) {
             spinnerID = 0;
             seriesID = spinnerID + 1;
+
+        //isbnコードで検索した時
+        } else if (id_.equals("isbn")){
+            spinnerID = 0;
+            seriesID = spinnerID + 1;
+
+            String data_ = i.getStringExtra("title");
+
+            title_editText.setText(i.getStringExtra("title"));
+            author_editText.setText(i.getStringExtra("author"));
+            code_editText.setText(i.getStringExtra("isbn"));
+            price_editText.setText(i.getStringExtra("itemPrice"));
+
+
         } else {
             Cursor c = db.query(
                     DB_helper.BOOK_TABLE,
@@ -129,7 +143,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     null
             );
             while (c.moveToNext()){
-                bookName_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
+                title_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
                 seriesID = c.getInt(c.getColumnIndexOrThrow(DB_helper.SERIES_ID));
                 author_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.AUTHOR)));
                 code_editText.setText(c.getString(c.getColumnIndexOrThrow(DB_helper.CODE)));
@@ -166,7 +180,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // OK ボタンクリック処理
-                                bookName_editText.setText("");
+                                title_editText.setText("");
                                 author_editText.setText("");
                                 code_editText.setText("");
                                 price_editText.setText("");
@@ -193,7 +207,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 //                ArrayList<ArrayList<String>> series = getSeries();
 
 
-                if (bookName_editText.getText().toString().equals("")) {
+                if (title_editText.getText().toString().equals("")) {
                     Toast.makeText(this, "書籍名が空白です", Toast.LENGTH_SHORT).show();
                     break;
                 } else if (radio_ID == -1){
@@ -201,7 +215,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
                     //新規登録
-                } else if (id_.equals("create")){
+                } else if (id_.equals("create") || id_.equals("isbn")){
                     db_helper = new DB_helper(getApplicationContext());
                     db = db_helper.getWritableDatabase();
 
@@ -223,7 +237,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             + db_helper.BOOK_NAME + "," + db_helper.AUTHOR + "," + db_helper.SERIES_ID + "," + db_helper.CODE + ","
                             + db_helper.HAVE + "," + db_helper.PRICE + "," + db_helper.PURCHASE_DATE + ") "
                             + "values ("
-                            + "'" + bookName_editText.getText().toString() + "',"
+                            + "'" + title_editText.getText().toString() + "',"
                             + "'" + author_editText.getText().toString() + "',"
                             + "'" + seriesID +"',"
                             + "'" + code_editText.getText().toString() + "',"
@@ -259,7 +273,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     }
 //                    seriesID = getSeriesID(spinnerID);
                     ContentValues valuse = new ContentValues();
-                    valuse.put(db_helper.BOOK_NAME, bookName_editText.getText().toString());
+                    valuse.put(db_helper.BOOK_NAME, title_editText.getText().toString());
                     valuse.put(db_helper.SERIES_ID, String.valueOf(seriesID));
                     valuse.put(db_helper.AUTHOR, author_editText.getText().toString());
                     valuse.put(db_helper.CODE, code_editText.getText().toString());

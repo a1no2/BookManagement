@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity {
     ViewPager viewPager;
     static String tag = "Project";
     private String code;
-    private TextView resultText;
+//    private TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,9 @@ public class MainActivity extends FragmentActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
-                code = result.getContents();
-                resultText.setText(code);
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_SHORT).show();
+                code = result.getContents()+"";
+//                resultText.setText(code);
 
                 Intent i = new Intent(MainActivity.this, RakutenSearch.class);
                 i.putExtra("code",code);

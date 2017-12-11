@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -34,7 +36,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
         if (!urlText.equals("")) {
 //            codeSearch = true;
             getLoaderManager().restartLoader(1, null, this);
-//            resultText.setText(urlText);
+            resultText.setText(urlText);
         } else {
             Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
         }
@@ -58,11 +60,54 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
         if (data != null) {
 
-            //JSONObject jsonObject = data.getJSONObject("request");
-            //textView.setText(jsonObject.toString());
+//            JSONObject jsonObject = data.getJSONObject("request");
+//            resultText.setText(jsonObject.toString());
             //テキストビューに結果を表示
-            resultText.setText(data.toString());
-//            String tst = data.getString("")
+//            Toast.makeText(this, data.toString()+"", Toast.LENGTH_SHORT).show();
+//            resultText.setText(data.toString());
+//            String tst = data.getString("");
+
+
+            try {
+                JSONObject json = new JSONObject(data.toString());
+                //JSONObject json = new JSONObject(jsonString());
+                JSONArray items = json.getJSONArray("Items");
+                JSONObject item = items.getJSONObject(0);
+                JSONObject raw = item.getJSONObject("Item");
+
+
+
+                Intent i = new Intent(resultActivity.this,RegistrationActivity.class);
+                i.putExtra("ID","isbn");
+
+//                String title = raw.getString("title");
+//                String author = raw.getString("author");
+//                String isbn = raw.getString("isbn");
+//                String itemPrice = raw.getString("itemPrice");
+
+                i.putExtra("title",raw.getString("title"));
+                i.putExtra("author",raw.getString("author"));
+                i.putExtra("isbn",raw.getString("isbn"));
+                i.putExtra("itemPrice",raw.getString("itemPrice"));
+                //String title =json.getJSONArray("items").getJSONObject(0).getString("title");
+                Log.d("tag", "message");
+                //resultText.setText(title);
+
+                startActivity(i);
+                this.finish();
+
+                //てすと
+                // resultText.setText(title +"\n"+ author +"\n"+ isbn +"\n"+ itemPrice);
+                //System.out.println(author);
+
+
+                //Toast.makeText(this, "出したい文字", Toast.LENGTH_LONG).show();
+            } catch(JSONException e) {
+                Log.d("onLoadFinished", "JSONのパースに失敗しました");
+            }
+
+
+
         } else {
             Log.d("onLoadFinished", "onLoadFinished error!");
         }
