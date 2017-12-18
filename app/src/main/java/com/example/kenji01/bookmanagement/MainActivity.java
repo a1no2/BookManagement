@@ -85,7 +85,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void statistics(View v) {
-        Intent i = new Intent(MainActivity.this, StatisticsActivity.class);
+//        Intent i = new Intent(MainActivity.this, StatisticsActivity.class);
+        Intent i = new Intent(MainActivity.this, LibraryIntentMain.class);
         startActivity(i);
     }
 

@@ -74,7 +74,8 @@
                 android:layout_weight="1"
                 android:onClick="statistics"
                 android:scaleType="centerInside"
-                android:src="@drawable/statistics" />
+                android:src="@android:drawable/ic_menu_search"/>
+            <!--android:src="@drawable/statistics"-->
 
             <ImageButton
                 android:layout_width="0dp"

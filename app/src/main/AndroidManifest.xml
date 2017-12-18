@@ -29,7 +29,8 @@
         <activity android:name=".StatisticsActivity" />
         <activity android:name=".seriesListActivity" />
         <activity android:name=".OptionActivity" />
-        <activity android:name=".SeriesOptionActivity"></activity>
+        <activity android:name=".SeriesOptionActivity" />
+        <activity android:name=".LibraryIntentMain"></activity>
     </application>
 
 </manifest>

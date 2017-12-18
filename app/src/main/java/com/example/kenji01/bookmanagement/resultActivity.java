@@ -36,7 +36,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
         if (!urlText.equals("")) {
 //            codeSearch = true;
             getLoaderManager().restartLoader(1, null, this);
-            resultText.setText(urlText);
+            resultText.setText("インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
         } else {
             Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
         }
@@ -71,6 +71,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
             try {
                 JSONObject json = new JSONObject(data.toString());
                 //JSONObject json = new JSONObject(jsonString());
+
                 JSONArray items = json.getJSONArray("Items");
                 JSONObject item = items.getJSONObject(0);
                 JSONObject raw = item.getJSONObject("Item");
@@ -80,15 +81,17 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
                 Intent i = new Intent(resultActivity.this,RegistrationActivity.class);
                 i.putExtra("ID","isbn");
 
-//                String title = raw.getString("title");
-//                String author = raw.getString("author");
-//                String isbn = raw.getString("isbn");
-//                String itemPrice = raw.getString("itemPrice");
+                String title = raw.getString("title");
+                String author = raw.getString("author");
+                String isbn = raw.getString("isbn");
+                String itemPrice = raw.getString("itemPrice");
 
-                i.putExtra("title",raw.getString("title"));
-                i.putExtra("author",raw.getString("author"));
-                i.putExtra("isbn",raw.getString("isbn"));
-                i.putExtra("itemPrice",raw.getString("itemPrice"));
+                i.putExtra("title",title);
+                i.putExtra("author",author);
+                i.putExtra("isbn",isbn);
+                i.putExtra("itemPrice",itemPrice);
+
+                String purse = "title:" + title + "\nauthor:" + author + "\nisbn:" + isbn + "\nprice:" + itemPrice;
                 //String title =json.getJSONArray("items").getJSONObject(0).getString("title");
                 Log.d("tag", "message");
                 //resultText.setText(title);
@@ -117,5 +120,9 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoaderReset(Loader<JSONObject> loader) {
         // 処理なし
+    }
+
+    private void t(String str){
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
 }
