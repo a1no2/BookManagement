@@ -23,6 +23,7 @@ import static java.util.Arrays.deepToString;
 public class resultActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONObject> {
     String urlText;
     TextView resultText;
+    String id_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +33,31 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
         resultText = (TextView)findViewById(R.id.resultText);
 
         Intent i = getIntent();
-        urlText = i.getStringExtra("url");
-        if (!urlText.equals("")) {
+        id_ = i.getStringExtra("ID");
+
+            //ISBNの場合
+        if (id_.equals("isbn")){
+            urlText = i.getStringExtra("url");
+            if (!urlText.equals("")) {
 //            codeSearch = true;
-            getLoaderManager().restartLoader(1, null, this);
-            resultText.setText("インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
-        } else {
-            Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
+                getLoaderManager().restartLoader(1, null, this);
+                resultText.setText("この画面が長く続く場合、インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
+            } else {
+                Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
+            }
+
+            //キーワード検索の場合
+        } else if (id_.equals("keyword")){
+//            ここにかく
+            urlText = i.getStringExtra("url");
+            if (!urlText.equals("")) {
+//            codeSearch = true;
+                getLoaderManager().restartLoader(1, null, this);
+                resultText.setText("この画面が長く続く場合、インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
+            } else {
+                Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
+            }
+
         }
 
 
@@ -58,63 +77,52 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
     //ロードが完了
     @Override
     public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
+
         if (data != null) {
+            if (id_.equals("isbn")) {
+                try {
+                    JSONObject json = new JSONObject(data.toString());
 
-//            JSONObject jsonObject = data.getJSONObject("request");
-//            resultText.setText(jsonObject.toString());
-            //テキストビューに結果を表示
-//            Toast.makeText(this, data.toString()+"", Toast.LENGTH_SHORT).show();
-//            resultText.setText(data.toString());
-//            String tst = data.getString("");
+                    JSONArray items = json.getJSONArray("Items");
+                    JSONObject item = items.getJSONObject(0);
+                    JSONObject raw = item.getJSONObject("Item");
 
+                    Intent i = new Intent(resultActivity.this, RegistrationActivity.class);
+                    i.putExtra("ID", "isbn");
 
-            try {
-                JSONObject json = new JSONObject(data.toString());
-                //JSONObject json = new JSONObject(jsonString());
+                    String title = raw.getString("title");
+                    String author = raw.getString("author");
+                    String isbn = raw.getString("isbn");
+                    String itemPrice = raw.getString("itemPrice");
 
-                JSONArray items = json.getJSONArray("Items");
-                JSONObject item = items.getJSONObject(0);
-                JSONObject raw = item.getJSONObject("Item");
+                    i.putExtra("title", title);
+                    i.putExtra("author", author);
+                    i.putExtra("isbn", isbn);
+                    i.putExtra("itemPrice", itemPrice);
 
+                    Log.d("tag", "message");
 
+                    startActivity(i);
+                    this.finish();
+                } catch (JSONException e) {
+                    Log.d("onLoadFinished", "JSONのパースに失敗しました");
+                }
+            }else if (id_.equals("keyword")){
+                resultText.setText("検索結果");
 
-                Intent i = new Intent(resultActivity.this,RegistrationActivity.class);
-                i.putExtra("ID","isbn");
-
-                String title = raw.getString("title");
-                String author = raw.getString("author");
-                String isbn = raw.getString("isbn");
-                String itemPrice = raw.getString("itemPrice");
-
-                i.putExtra("title",title);
-                i.putExtra("author",author);
-                i.putExtra("isbn",isbn);
-                i.putExtra("itemPrice",itemPrice);
-
-                String purse = "title:" + title + "\nauthor:" + author + "\nisbn:" + isbn + "\nprice:" + itemPrice;
-                //String title =json.getJSONArray("items").getJSONObject(0).getString("title");
-                Log.d("tag", "message");
-                //resultText.setText(title);
-
-                startActivity(i);
-                this.finish();
-
-                //てすと
-                // resultText.setText(title +"\n"+ author +"\n"+ isbn +"\n"+ itemPrice);
-                //System.out.println(author);
+//                        あ
+//                        あ
+                t("キーワード");
 
 
-                //Toast.makeText(this, "出したい文字", Toast.LENGTH_LONG).show();
-            } catch(JSONException e) {
-                Log.d("onLoadFinished", "JSONのパースに失敗しました");
             }
-
-
 
         } else {
             Log.d("onLoadFinished", "onLoadFinished error!");
         }
+
     }
+
 
     //ロード内容が破棄された？
     @Override

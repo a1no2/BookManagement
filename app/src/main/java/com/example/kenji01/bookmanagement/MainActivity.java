@@ -61,6 +61,7 @@ public class MainActivity extends FragmentActivity {
 //                resultText.setText(code);
 
                 Intent i = new Intent(MainActivity.this, RakutenSearch.class);
+                i.putExtra("id","isbn");
                 i.putExtra("code",code);
                 startActivity(i);
             }

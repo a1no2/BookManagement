@@ -31,6 +31,7 @@ public class RakutenSearch extends AppCompatActivity{
 
         Intent i = getIntent();
         code = i.getStringExtra("code");
+//        String id = i.getStringExtra("ID");
 
         TextView text2 = (EditText) findViewById(R.id.txt02);
         text2.setText(code);
@@ -139,11 +140,15 @@ public class RakutenSearch extends AppCompatActivity{
         String[] str = GetTextBox();
         //ISBN判定
 
+        Intent i = new Intent(RakutenSearch.this, resultActivity.class);
         if(!Objects.equals(str[1], "")){
             //ISBN検索
             //urlText = "http://192.168.0.3:8080/API/item_info.php?ISBN="+str[1];
             urlText = "http://hiyoko.softether.net:8080/API/item_info.php?ISBN="+str[1];
+            i.putExtra("ID","isbn");
+
         }else {
+            i.putExtra("ID","keyword");
             //タイトル判定
             if (!Objects.equals(str[0], "")) {
                 keyword = keyword + str[0] + " ";
@@ -170,7 +175,7 @@ public class RakutenSearch extends AppCompatActivity{
 //            System.out.println(urlText);
         }
 
-        Intent i = new Intent(RakutenSearch.this, resultActivity.class);
+
         i.putExtra("url",urlText);
         startActivity(i);
         finish();
