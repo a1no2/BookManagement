@@ -17,7 +17,7 @@ public class LibraryIntentMain extends AppCompatActivity {
 
         //URL発行用のインスタンス生成
         final IntentUrlLoader objURL = new IntentUrlLoader();
-
+        /*
         Button btn01 = (Button)findViewById(R.id.bt01);
         btn01.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +34,8 @@ public class LibraryIntentMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
+        /*
         Button btn02 = (Button)findViewById(R.id.bt02);
         btn02.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +56,7 @@ public class LibraryIntentMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
         Button btn03 = (Button)findViewById(R.id.bt03);
         btn03.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,10 @@ public class LibraryIntentMain extends AppCompatActivity {
                 Intent intent = new Intent();
                 // インテントにアクション及びURLをセット
                 intent.setAction(Intent.ACTION_VIEW);
+
+                //フリーワード
+                EditText editText1 = (EditText) findViewById(R.id.txt01);
+                String text1 = editText1.getText().toString();
 
                 //タイトル
                 EditText editText2 = (EditText) findViewById(R.id.txt02);
@@ -77,7 +84,11 @@ public class LibraryIntentMain extends AppCompatActivity {
                 EditText editText5 = (EditText) findViewById(R.id.txt05);
                 String text5 = editText5.getText().toString();
 
-                objURL.createURL(text2,text3,text4,text5);
+                if(!text1.equals("")) {
+                    objURL.createURL(text1);
+                }else {
+                    objURL.createURL(text2, text3, text4, text5);
+                }
                 intent.setData(Uri.parse(objURL.result));
                 // ブラウザ起動
                 startActivity(intent);

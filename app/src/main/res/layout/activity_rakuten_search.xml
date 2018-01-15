@@ -32,8 +32,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:contentDescription="タイトル"
-                    android:text="タイトル"
-                    android:visibility="gone"/>
+                    android:text="タイトル" />
 
                 <EditText
                     android:id="@+id/txt01"
@@ -41,8 +40,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="タイトル"
                     android:ems="10"
-                    android:inputType="text"
-                    android:visibility="gone"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/label02"
@@ -65,8 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="著者"
-                    android:text="著者"
-                    android:visibility="gone"/>
+                    android:text="著者" />
 
                 <EditText
                     android:id="@+id/txt03"
@@ -74,16 +71,14 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="著者"
                     android:ems="10"
-                    android:inputType="text|textPersonName"
-                    android:visibility="gone"/>
+                    android:inputType="text|textPersonName" />
 
                 <TextView
                     android:id="@+id/label04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="出版社"
-                    android:text="出版社"
-                    android:visibility="gone"/>
+                    android:text="出版社" />
 
                 <EditText
                     android:id="@+id/txt04"
@@ -91,22 +86,19 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="出版社"
                     android:ems="10"
-                    android:inputType="text"
-                    android:visibility="gone"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="検索オプション"
-                    android:visibility="gone"/>
+                    android:text="検索オプション" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
                     <RadioGroup
                         android:id="@+id/radio_group"
@@ -137,8 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ページ桁（デバッグオプション"
-                    android:visibility="gone"/>
+                    android:text="ページ桁（デバッグオプション" />
 
                 <EditText
                     android:id="@+id/txt05"
@@ -147,8 +138,7 @@
                     android:ems="10"
                     android:inputType="numberDecimal"
                     android:maxLength="4"
-                    android:textAlignment="center"
-                    android:visibility="gone"/>
+                    android:textAlignment="center" />
 
                 <LinearLayout
                     android:layout_width="238dp"
@@ -173,21 +163,21 @@
                 </LinearLayout>
 
                 <!--<android.support.v4.widget.NestedScrollView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/result"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
+                <!--<TextView-->
+                <!--android:id="@+id/result"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
 
-                        <!--android:scrollbars="vertical"-->
-                        <!--android:text="ここにJSON結果"-->
-                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                        <!--app:layout_constraintRight_toRightOf="parent"-->
-                        <!--app:layout_constraintTop_toTopOf="parent" />-->
+                <!--android:scrollbars="vertical"-->
+                <!--android:text="ここにJSON結果"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent" />-->
                 <!--</android.support.v4.widget.NestedScrollView>-->
 
             </LinearLayout>

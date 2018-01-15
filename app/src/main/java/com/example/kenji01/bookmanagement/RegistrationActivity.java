@@ -97,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 spinnerID = position;
                 seriesID = spinnerID + 1;
 //                spinnerID = spinner.getSelectedItemPosition();
-                Toast.makeText(RegistrationActivity.this, "position:" + position + "\nitem:" + item + "\n" + "getSelectedItemPosition:"  + spinnerID, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegistrationActivity.this, "position:" + position + "\nitem:" + item + "\n" + "getSelectedItemPosition:"  + spinnerID, Toast.LENGTH_SHORT).show();
             }
             // 何も選択されなかったときに呼び出される。
             @Override
@@ -159,7 +159,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             }
             c.close();
             spinnerID = seriesID -1;
-            toast("シリーズID:"+(seriesID)+"\nスピナーID:"+spinnerID,true);
+//            toast("シリーズID:"+(seriesID)+"\nスピナーID:"+spinnerID,true);
         }
         setSpinner();
     }
@@ -327,7 +327,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             str += series.get(1).get(j) + "\n";
             count = j+1;
         }
-        Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
+//        Toast.makeText(RegistrationActivity.this, str, Toast.LENGTH_LONG).show();
     }
     //シリーズテーブル返す
     private ArrayList<ArrayList<String>> getSeries(){
@@ -374,7 +374,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         alertDialog.setPositiveButton("登録", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // OKボタン押下時の処理
-                toast(editView.getText().toString(), true);
+//                toast(editView.getText().toString(), true);
 
                 String SQL_str = "insert into "
                         + db_helper.SERIES_TABLE + " ( " + db_helper.SERIES_NAME + ") "

@@ -114,27 +114,26 @@ public class RakutenSearch extends AppCompatActivity{
         String flag ="";
         String page="";
 
-//        // ラジオグループのオブジェクトを取得
-//        RadioGroup rg = (RadioGroup)findViewById(R.id.radio_group);
-//        // チェックされているラジオボタンの ID を取得
-//        int radioId = rg.getCheckedRadioButtonId();
-//        // チェックされているラジオボタンオブジェクトを取得
-//        // RadioButton radioButton = (RadioButton)findViewById(radioId);
-//        System.out.println("ID:"+radioId);
-//        //選択されているラジオボタンを判定
-//        switch (radioId) {
-//            case R.id.radio_and:
-//                //AND検索パラメータを付加
-//                flag = "&orFlag=0";
-//                System.out.println("and");
-//                break;
-//            case R.id.radio_or:
-//                //OR検索パラメータを付加
-//                flag = "&orFlag=1";
-//                System.out.println("or");
-//                break;
-//        }
-        flag = "&orFlag=0";
+        // ラジオグループのオブジェクトを取得
+        RadioGroup rg = (RadioGroup)findViewById(R.id.radio_group);
+        // チェックされているラジオボタンの ID を取得
+        int radioId = rg.getCheckedRadioButtonId();
+        // チェックされているラジオボタンオブジェクトを取得
+        // RadioButton radioButton = (RadioButton)findViewById(radioId);
+        System.out.println("ID:"+radioId);
+        //選択されているラジオボタンを判定
+        switch (radioId) {
+            case R.id.radio_and:
+                //AND検索パラメータを付加
+                flag = "&orFlag=0";
+                System.out.println("and");
+                break;
+            case R.id.radio_or:
+                //OR検索パラメータを付加
+                flag = "&orFlag=1";
+                System.out.println("or");
+                break;
+        }
 
 
         //フォームデータの取得
@@ -173,7 +172,7 @@ public class RakutenSearch extends AppCompatActivity{
             //オプション「orFlag=1」でOR検索が可能
             //urlText = "http://192.168.0.3:8080/API/item_search.php?request=" + keyword + page + flag;
             urlText = "http://hiyoko.softether.net:8080/API/item_search.php?request=" + keyword + page + flag;
-//            System.out.println(urlText);
+            System.out.println(urlText);
         }
 
 

@@ -1,127 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.kenji01.bookmanagement.LibraryIntentMain">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kenji01.bookmanagement.LibraryIntentMain">
 
-        <ScrollView
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp"
-            tools:ignore="MissingConstraints">
+            tools:layout_editor_absoluteY="8dp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="検索ボタンで外部ブラウザが開きます"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/label03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.04"
+                android:text="フリーワード検索"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/txt01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="フリーワード"
+                android:layout_marginBottom="20dp"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/label04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.04"
+                android:text="詳細検索"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/txt02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="タイトル"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/txt03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="ISBNコード"
+                android:inputType="number"
+                android:maxLength="13" />
+
+            <EditText
+                android:id="@+id/txt04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="著者"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/txt05"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="出版社"
+                android:inputType="textPersonName" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="8dp">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="各種検索ボタンで外部ブラウザが開きます"
-                    android:textSize="18sp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
-                <TextView
-                    android:id="@+id/label02"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:text="データの指定なし" />
-
-                <Button
-                    android:id="@+id/bt01"
-                    android:layout_width="142dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:text="図書館検索" />
-
-                <TextView
-                    android:id="@+id/label03"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:text="フリーワード検索" />
-
-                <EditText
-                    android:id="@+id/txt01"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="フリーワード"
-                    android:inputType="textPersonName" />
-
-                <Button
-                    android:id="@+id/bt02"
-                    android:layout_width="142dp"
-                    android:layout_height="wrap_content"
-                    android:text="図書館検索" />
-
-                <TextView
-                    android:id="@+id/label04"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:text="詳細検索" />
-
-                <EditText
-                    android:id="@+id/txt02"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="タイトル"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/txt03"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="ISBNコード"
-                    android:inputType="number"
-                    android:maxLength="13" />
-
-                <EditText
-                    android:id="@+id/txt04"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="著者"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/txt05"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="出版社"
-                    android:inputType="textPersonName" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="200dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/bt03"
                     android:layout_width="142dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:text="図書館検索" />
-
-                <TextView
-                    android:id="@+id/label01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:autoLink="web"
-                    android:clickable="false"
-                    android:text="https://www.library.pref.kyoto.jp/cross/cross.html"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
+                    android:text="図書館検索"
+                    android:textAlignment="center" />
             </LinearLayout>
-        </ScrollView>
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/label01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:autoLink="web"
+                android:clickable="false"
+                android:text="https://www.library.pref.kyoto.jp/cross/cross.html"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
