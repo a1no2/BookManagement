@@ -114,26 +114,27 @@ public class RakutenSearch extends AppCompatActivity{
         String flag ="";
         String page="";
 
-        // ラジオグループのオブジェクトを取得
-        RadioGroup rg = (RadioGroup)findViewById(R.id.radio_group);
-        // チェックされているラジオボタンの ID を取得
-        int radioId = rg.getCheckedRadioButtonId();
-        // チェックされているラジオボタンオブジェクトを取得
-        // RadioButton radioButton = (RadioButton)findViewById(radioId);
-        System.out.println("ID:"+radioId);
-        //選択されているラジオボタンを判定
-        switch (radioId) {
-            case R.id.radio_and:
-                //AND検索パラメータを付加
-                flag = "&orFlag=0";
-                System.out.println("and");
-                break;
-            case R.id.radio_or:
-                //OR検索パラメータを付加
-                flag = "&orFlag=1";
-                System.out.println("or");
-                break;
-        }
+//        // ラジオグループのオブジェクトを取得
+//        RadioGroup rg = (RadioGroup)findViewById(R.id.radio_group);
+//        // チェックされているラジオボタンの ID を取得
+//        int radioId = rg.getCheckedRadioButtonId();
+//        // チェックされているラジオボタンオブジェクトを取得
+//        // RadioButton radioButton = (RadioButton)findViewById(radioId);
+//        System.out.println("ID:"+radioId);
+//        //選択されているラジオボタンを判定
+//        switch (radioId) {
+//            case R.id.radio_and:
+//                //AND検索パラメータを付加
+//                flag = "&orFlag=0";
+//                System.out.println("and");
+//                break;
+//            case R.id.radio_or:
+//                //OR検索パラメータを付加
+//                flag = "&orFlag=1";
+//                System.out.println("or");
+//                break;
+//        }
+        flag = "&orFlag=0";
 
 
         //フォームデータの取得

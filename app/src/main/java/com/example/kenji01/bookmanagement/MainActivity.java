@@ -99,14 +99,9 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void option(View v){
-        Intent i = new Intent(MainActivity.this, OptionActivity.class);
+        Intent i = new Intent(MainActivity.this, SeriesOptionActivity.class);
         startActivity(i);
     }
 
-
-    //未実装のボタンの処理
-    public void tst(View v) {
-        Toast.makeText(this, "未実装", Toast.LENGTH_SHORT).show();
-    }
 
 }

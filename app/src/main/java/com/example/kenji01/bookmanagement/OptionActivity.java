@@ -14,7 +14,7 @@ public class OptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_option);
     }
 
-
+    //シリーズ名の編集
     public void series_click(View v){
         Intent i = new Intent(OptionActivity.this,SeriesOptionActivity.class);
         startActivity(i);

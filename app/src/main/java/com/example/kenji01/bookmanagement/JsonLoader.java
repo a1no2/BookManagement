@@ -67,10 +67,7 @@ public class JsonLoader extends AsyncTaskLoader<JSONObject> {
                 }
             }
 
-            //JSONObject json = new JSONObject(new String(outputStream.toByteArray()));
             return new JSONObject(outputStream.toString());
-            //JSONObject json = outputStream.toString();
-            //return json;
 
 
         }

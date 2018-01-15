@@ -32,7 +32,8 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:contentDescription="タイトル"
-                    android:text="タイトル" />
+                    android:text="タイトル"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/txt01"
@@ -40,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="タイトル"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/label02"
@@ -63,7 +65,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="著者"
-                    android:text="著者" />
+                    android:text="著者"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/txt03"
@@ -71,14 +74,16 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="著者"
                     android:ems="10"
-                    android:inputType="text|textPersonName" />
+                    android:inputType="text|textPersonName"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/label04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="出版社"
-                    android:text="出版社" />
+                    android:text="出版社"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/txt04"
@@ -86,19 +91,22 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="出版社"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="検索オプション" />
+                    android:text="検索オプション"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <RadioGroup
                         android:id="@+id/radio_group"
@@ -129,7 +137,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ページ桁（デバッグオプション" />
+                    android:text="ページ桁（デバッグオプション"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/txt05"
@@ -138,7 +147,8 @@
                     android:ems="10"
                     android:inputType="numberDecimal"
                     android:maxLength="4"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="238dp"

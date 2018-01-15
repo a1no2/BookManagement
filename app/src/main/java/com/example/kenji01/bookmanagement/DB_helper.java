@@ -18,7 +18,7 @@ public class DB_helper extends SQLiteOpenHelper{
     private static final String DB_NAME = "client_DB";
     private static final int DB_VERSION = 1;
 
-    //本テーブル
+    //書籍テーブル
     public static final String BOOK_TABLE = "book_table";
     public static final String BOOK_ID = "book_id";
     public static final String BOOK_NAME = "book_name";
@@ -28,7 +28,7 @@ public class DB_helper extends SQLiteOpenHelper{
     public static final String PRICE = "price";
     public static final String PURCHASE_DATE = "purchase_date";
 
-    //シリーズテーブルBOOK_
+    //シリーズテーブル
     public static final String SERIES_TABLE = "series_table";
     public static final String SERIES_ID = "series_id";
     public static final String SERIES_NAME = "series_name";

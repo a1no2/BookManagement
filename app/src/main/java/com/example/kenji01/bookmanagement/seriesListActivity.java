@@ -153,9 +153,8 @@ public class seriesListActivity extends AppCompatActivity {
             str += c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME));
             id_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_ID)));
             name_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.BOOK_NAME)));
-//            have_arr.add(c.getString(c.getColumnIndexOrThrow(DB_helper.HAVE)));
         }
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
         ItemAdapter adapter = new ItemAdapter(this, R.layout.item_layout, array);
         listView.setAdapter(adapter);

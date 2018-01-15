@@ -16,7 +16,6 @@ public class Pager extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-
         switch (i) {
             case 0:
                 return new WishListActivity();
@@ -30,6 +29,7 @@ public class Pager extends FragmentStatePagerAdapter {
         return 2;
     }
 
+    //ページをセット
     @Override
     public CharSequence getPageTitle(int position) {
         String pageName;

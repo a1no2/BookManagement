@@ -66,7 +66,7 @@
                 android:layout_weight="1"
                 android:onClick="option"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_manage" />
+                android:src="@drawable/config" />
 
             <ImageButton
                 android:layout_width="0dp"
@@ -74,8 +74,7 @@
                 android:layout_weight="1"
                 android:onClick="statistics"
                 android:scaleType="centerInside"
-                android:src="@drawable/library"/>
-            <!--android:src="@drawable/statistics"-->
+                android:src="@drawable/web"/>
 
             <ImageButton
                 android:layout_width="0dp"
@@ -83,7 +82,7 @@
                 android:layout_weight="1"
                 android:onClick="search"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_search" />
+                android:src="@drawable/library" />
 
             <ImageButton
                 android:layout_width="0dp"
@@ -91,7 +90,7 @@
                 android:layout_weight="1"
                 android:onClick="scanBarcode"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_camera" />
+                android:src="@drawable/camera" />
         </LinearLayout>
 
     </LinearLayout>

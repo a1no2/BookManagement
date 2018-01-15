@@ -48,10 +48,8 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
 
             //キーワード検索の場合
         } else if (id_.equals("keyword")){
-//            ここにかく
             urlText = i.getStringExtra("url");
             if (!urlText.equals("")) {
-//            codeSearch = true;
                 getLoaderManager().restartLoader(1, null, this);
                 resultText.setText("この画面が長く続く場合、インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
             } else {

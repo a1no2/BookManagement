@@ -28,7 +28,6 @@ import java.util.ArrayList;
 public class PossessionListActivity extends Fragment{
     private ArrayList<String> title_arr;
     private ArrayList<String> id_arr;
-    private ArrayAdapter<String> adapter;
     private ListView list;
 
     //DBを使う準備
@@ -52,7 +51,7 @@ public class PossessionListActivity extends Fragment{
         db = db_helper.getWritableDatabase();
         setAdapter();
 
-
+        //書籍のリストのクリックイベント
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = (Item)list.getItemAtPosition(position);
@@ -76,7 +75,6 @@ public class PossessionListActivity extends Fragment{
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
                 Item item = (Item)list.getItemAtPosition(position);
                 Bitmap bm = item.getThumbnail();
-
                 if (item.getmFlag().equals("1")) {
 
                 } else {
@@ -114,7 +112,6 @@ public class PossessionListActivity extends Fragment{
                 return true;
             }
         });
-
         return v;
     }
 
@@ -174,13 +171,6 @@ public class PossessionListActivity extends Fragment{
         }
         ItemAdapter adapter = new ItemAdapter(getContext(), R.layout.item_layout, array);
         list.setAdapter(adapter);
-//        c.close();
-//        adapter = new ArrayAdapter<String>(
-//                getContext(),
-//                android.R.layout.simple_dropdown_item_1line,
-//                title_arr
-//        );
-//        list.setAdapter(adapter);
     }
 
 

@@ -45,7 +45,7 @@ public class SeriesOptionActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 String str = arr_id.get(position) + "\n" + arr_name.get(position);
-                t(str);
+//                t(str);
                 create_alertDialog(position);
             }
         });
@@ -82,7 +82,6 @@ public class SeriesOptionActivity extends AppCompatActivity {
 
     private void t(String s){
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-
     }
 
     private void create_alertDialog(final int i){

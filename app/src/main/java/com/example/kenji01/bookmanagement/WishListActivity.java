@@ -162,8 +162,6 @@ public class WishListActivity extends Fragment {
         list.setAdapter(adapter);
     }
 
-    private void tngt(String str){
-        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
-    }
+
 
 }
