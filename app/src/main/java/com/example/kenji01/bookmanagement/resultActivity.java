@@ -1,6 +1,6 @@
 package com.example.kenji01.bookmanagement;
 
-import android.graphics.Bitmap;
+        import android.graphics.Bitmap;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -13,12 +13,12 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
+        import android.widget.AdapterView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
+        import java.util.ArrayList;
 import java.util.Objects;
 import static java.util.Arrays.deepToString;
 
@@ -37,7 +37,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
         Intent i = getIntent();
         id_ = i.getStringExtra("ID");
 
-        //ISBNの場合
+            //ISBNの場合
         if (id_.equals("isbn")){
             urlText = i.getStringExtra("url");
             if (!urlText.equals("")) {
@@ -55,7 +55,7 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
             if (!urlText.equals("")) {
 //            codeSearch = true;
                 getLoaderManager().restartLoader(1, null, this);
-                resultText.setText("この画面が長く続く場合、インターネット繋がってない\nまたは、読み取ったデータが存在しない可能性があります。");
+                resultText.setText("この画面が長く続く場合、インターネット繋がってない\nまたは、データが存在しない可能性があります。");
             } else {
                 Toast.makeText(this, "からでござる", Toast.LENGTH_LONG).show();
             }
@@ -129,19 +129,24 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
                     // リストビューに表示する要素を設定
                     ArrayList<ResultListItem> listItems = new ArrayList<>();
 
-                    for (int i = 0; i < items.length(); i++) {
-                        JSONObject eventObj = items.getJSONObject(i);
-                        JSONObject event = eventObj.getJSONObject("Item");
-                        Log.d("title", event.getString("title"));
-                        //list.add(event.getString("title"));
-                        ResultListItem item = new ResultListItem(event.getString("smallImageUrl"),event.getString("title"),event.getString("isbn"),event.getString("author"),event.getString("itemPrice"),"1");
-                        listItems.add(item);
+                    if(items.length() > 0) {
+                        for (int i = 0; i < items.length(); i++) {
+                            JSONObject eventObj = items.getJSONObject(i);
+                            JSONObject event = eventObj.getJSONObject("Item");
+                            Log.d("title", event.getString("title"));
+                            //list.add(event.getString("title"));
+                            ResultListItem item = new ResultListItem(event.getString("smallImageUrl"), event.getString("title"), event.getString("isbn"), event.getString("author"), event.getString("itemPrice"), "1");
+                            listItems.add(item);
+                        }
+                        Log.d("onLoadFinished", "JSONパース:" + items.length());
+
+                        // 出力結果をリストビューに表示
+                        ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, listItems);
+                        listView.setAdapter(adapter);
+                    }else {
+                        listView.setVisibility(View.GONE);
+                        resultText.setText("検索結果が0件でした。");
                     }
-
-                    // 出力結果をリストビューに表示
-                    ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, listItems);
-                    listView.setAdapter(adapter);
-
 
 
                 } catch (JSONException e) {
@@ -150,6 +155,8 @@ public class resultActivity extends AppCompatActivity implements LoaderManager.L
             }
 
         } else {
+            listView.setVisibility(View.GONE);
+            resultText.setText("インターネットの接続状況が悪いかアクセスが集中している可能性があります。");
             Log.d("onLoadFinished", "onLoadFinished error!");
         }
 

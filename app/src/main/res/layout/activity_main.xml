@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:onClick="statistics"
                 android:scaleType="centerInside"
-                android:src="@drawable/web"/>
+                android:src="@drawable/library"/>
 
             <ImageButton
                 android:layout_width="0dp"
@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:onClick="search"
                 android:scaleType="centerInside"
-                android:src="@drawable/library" />
+                android:src="@drawable/web" />
 
             <ImageButton
                 android:layout_width="0dp"

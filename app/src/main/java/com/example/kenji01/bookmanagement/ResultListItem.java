@@ -1,5 +1,5 @@
 package com.example.kenji01.bookmanagement;
-
+import android.graphics.Bitmap;
 /**
  * Created by TARO on 2018/01/2.
  */
